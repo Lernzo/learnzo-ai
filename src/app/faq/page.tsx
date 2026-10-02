@@ -7,13 +7,21 @@ import { Button } from "@/components/ui/Button";
 export const metadata: Metadata = {
   title: "Frequently asked questions",
   description:
-    "Answers about Learnzo: how homework upload works, which subjects and boards are supported, how practice and printable worksheets work, and how payments are handled."
+    "Answers about Learnzo: how homework upload works, which Indian boards and subjects are supported, how practice and printable worksheets work, and how payments are handled."
 };
 
 const FAQS: { q: string; a: string }[] = [
   {
     q: "What is Learnzo?",
     a: "Learnzo is an AI learning assistant that helps children understand their homework. It shows step-by-step reasoning, a simple explanation, and practice questions on the same concept. It is built around the idea that homework should end in understanding, not just a copied answer."
+  },
+  {
+    q: "Which Indian boards are supported?",
+    a: "Learnzo is designed around the Indian school ecosystem. It supports CBSE and ICSE, and is built so State Board curricula can be added. It follows the NCERT framework and the NEP 2020 5+3+3+4 structure. Learnzo is an independent product and is not affiliated with or endorsed by DSEL, NCERT, CBSE, ICSE or any State Board."
+  },
+  {
+    q: "Which classes and subjects are supported?",
+    a: "Classes 6 to 12 at launch, across Mathematics, Science (Physics, Chemistry, Biology) and English. The engine recognises the topic and difficulty from the question, and the architecture allows more subjects to be added without changing the rest of the app."
   },
   {
     q: "How does homework upload work?",
@@ -25,15 +33,19 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Can I upload a PDF?",
-    a: "Yes. PDFs up to 8 MB are supported. If the PDF contains multiple questions, the app allows you to choose which ones to solve. Large multi-page PDFs are intentionally limited to keep processing fast and to control cost."
+    a: "Yes. PDFs up to 8 MB are supported. If the PDF contains multiple questions, the app allows you to choose which ones to solve. Large multi-page PDFs are limited on purpose to keep processing fast and costs under control."
   },
   {
-    q: "What subjects are supported?",
-    a: "Mathematics, Science and English at launch. The system is built so additional subjects can be added without changing the rest of the app."
+    q: "Does it work with Mathematics?",
+    a: "Yes. Arithmetic, fractions, decimals, algebra, geometry, mensuration, statistics and word problems are supported. Mathematical expressions and calculations are shown explicitly, and every step is listed so the method is visible."
   },
   {
-    q: "Does it work with Math?",
-    a: "Yes. Arithmetic, fractions, algebra, geometry and word problems are supported. Mathematical expressions and calculations are shown explicitly, and every step is listed so the method is visible."
+    q: "Does it work with Science?",
+    a: "Yes. Physics, Chemistry, Biology and Environmental Science are covered. Learnzo clearly separates established scientific facts from assumptions, and states units and reasoning where relevant."
+  },
+  {
+    q: "Does it work with English?",
+    a: "Yes. Grammar, comprehension, vocabulary and writing are supported. Grammar rules are explained rather than just applied, so students understand why a form is correct."
   },
   {
     q: "Can parents use it?",
@@ -45,7 +57,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "How does Learnzo encourage learning?",
-    a: "The full loop is: upload, understand, explain again if needed, practise, check, improve. The 'I Still Don't Understand' button offers five fresh explanations of the same idea so a student can find the way that clicks."
+    a: "The full loop is: upload, understand, explain again if needed, practise, check, improve. The I Still Don't Understand button offers five fresh explanations of the same idea so a student can find the way that clicks."
   },
   {
     q: "Is there a free version?",
@@ -119,7 +131,6 @@ export default function FAQPage() {
       </main>
       <Footer />
 
-      {/* Structured data for search engines */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
