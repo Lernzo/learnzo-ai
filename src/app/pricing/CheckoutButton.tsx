@@ -2,15 +2,16 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Spinner } from "@/components/ui/Spinner";
 import { Analytics } from "@/lib/analytics";
-import Link from "next/link";
 
 interface Props {
   planId: string;
   priceInr: number;
   paymentsReady: boolean;
+  signedIn: boolean;
 }
 
 interface RazorpayHandlerResponse {
@@ -58,7 +59,7 @@ function loadRazorpayScript(): Promise<void> {
   });
 }
 
-export function CheckoutButton({ planId, priceInr, paymentsReady }: Props) {
+export function CheckoutButton({ planId, priceInr, paymentsReady, signedIn }: Props) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -75,7 +76,6 @@ export function CheckoutButton({ planId, priceInr, paymentsReady }: Props) {
 
     setBusy(true);
     try {
-      // 1. Create order server-side.
       const r = await fetch("/api/payments/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -87,7 +87,6 @@ export function CheckoutButton({ planId, priceInr, paymentsReady }: Props) {
         return;
       }
 
-      // 2. Load Razorpay checkout script.
       await loadRazorpayScript();
       if (!window.Razorpay) {
         setError("Could not load the payment window. Try disabling your ad-blocker.");
@@ -96,7 +95,6 @@ export function CheckoutButton({ planId, priceInr, paymentsReady }: Props) {
 
       Analytics.track("checkout_started", { planId, amount: order.amountInr });
 
-      // 3. Open Razorpay checkout.
       const rzp = new window.Razorpay({
         key: order.publicKey,
         amount: order.amountInr * 100,
@@ -106,7 +104,6 @@ export function CheckoutButton({ planId, priceInr, paymentsReady }: Props) {
         order_id: order.providerOrderId,
         theme: { color: "#1a4bdd" },
         handler: async (response) => {
-          // 4. Verify server-side.
           const v = await fetch("/api/payments/verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -122,9 +119,7 @@ export function CheckoutButton({ planId, priceInr, paymentsReady }: Props) {
           router.refresh();
         },
         modal: {
-          ondismiss: () => {
-            setBusy(false);
-          }
+          ondismiss: () => setBusy(false)
         }
       });
       rzp.open();
@@ -135,6 +130,7 @@ export function CheckoutButton({ planId, priceInr, paymentsReady }: Props) {
     }
   }
 
+  // Free plan â€” always start free
   if (priceInr === 0) {
     return (
       <Link href="/solve">
@@ -145,6 +141,21 @@ export function CheckoutButton({ planId, priceInr, paymentsReady }: Props) {
     );
   }
 
+  // Not signed in â€” send to login with return to pricing
+  if (!signedIn) {
+    return (
+      <Link href="/auth/login?next=/pricing">
+        <Button
+          variant={planId === "PLUS_YEARLY" ? "primary" : "outline"}
+          className="w-full"
+        >
+          Sign in to upgrade
+        </Button>
+      </Link>
+    );
+  }
+
+  // Signed in â€” start checkout
   return (
     <div>
       <Button

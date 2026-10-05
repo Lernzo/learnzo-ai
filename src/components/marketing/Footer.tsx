@@ -4,41 +4,36 @@ import Image from "next/image";
 export function Footer() {
   return (
     <footer className="bg-white border-t border-slate-100 mt-10">
-      <div className="container-x py-12 grid md:grid-cols-4 gap-8 text-sm">
-        <div>
-          <Image
-            src="/learnzo-logo.png"
-            alt="Learnzo - Learn. Understand. Grow."
-            width={360}
-            height={180}
-            className="h-24 w-auto"
-          />
-          <p className="mt-4 text-slate-500">Upload. Understand. Practise.</p>
-        </div>
-        <div>
-          <div className="font-semibold">Product</div>
-          <ul className="mt-3 space-y-2 text-slate-600">
-            <li><Link href="/solve">Solve a question</Link></li>
-            <li><Link href="/how-it-works">How it works</Link></li>
-            <li><Link href="/pricing">Pricing</Link></li>
-          </ul>
-        </div>
-        <div>
-          <div className="font-semibold">Learn</div>
-          <ul className="mt-3 space-y-2 text-slate-600">
-            <li><Link href="/faq">FAQ</Link></li>
-            <li><Link href="/responsible-ai">Responsible AI</Link></li>
-          </ul>
-        </div>
-        <div>
-          <div className="font-semibold">Company</div>
-          <ul className="mt-3 space-y-2 text-slate-600">
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/sales">Why Learnzo</Link></li>
-          </ul>
+      <div className="container-x py-10">
+        <div className="flex flex-col md:flex-row md:items-center gap-8">
+
+          <div className="shrink-0">
+            <Link href="/" aria-label="Learnzo home" className="inline-block">
+              <Image
+                src="/learnzo-logo.png"
+                alt="Learnzo"
+                width={600}
+                height={300}
+                className="h-50 w-auto"
+              />
+            </Link>
+          </div>
+
+          <div className="flex-1 flex flex-wrap md:justify-end gap-x-6 gap-y-3 text-sm text-slate-700">
+            <Link href="/about" className="hover:text-brand-600">About</Link>
+            <Link href="/solve" className="hover:text-brand-600">Solve</Link>
+            <Link href="/kids" className="hover:text-brand-600">Kids</Link>
+            <Link href="/jobs" className="hover:text-brand-600">Jobs</Link>
+            <Link href="/pricing" className="hover:text-brand-600">Pricing</Link>
+            <Link href="/faq" className="hover:text-brand-600">FAQ</Link>
+            <Link href="/how-it-works" className="hover:text-brand-600">How it works</Link>
+            <Link href="/history" className="hover:text-brand-600">History</Link>
+          </div>
+
         </div>
       </div>
-      <div className="border-t border-slate-100 py-6 text-center text-xs text-slate-500">
+
+      <div className="border-t border-slate-100 py-5 text-center text-xs text-slate-500">
         &copy; {new Date().getFullYear()} Learnzo &middot; learnzo.online
       </div>
     </footer>

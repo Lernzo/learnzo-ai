@@ -1,7 +1,18 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PROTECTED_PREFIXES = ["/history", "/parent", "/admin"];
+/**
+ * Only these routes require sign-in.
+ * Everything else â€” including /jobs, /kids, /careers, and all
+ * marketing pages â€” is public and indexable by Google.
+ */
+const PROTECTED_PREFIXES = [
+  "/solve",
+  "/history",
+  "/parent",
+  "/admin"
+];
+
 const AUTH_PREFIXES = ["/auth/login", "/auth/signup"];
 
 export async function middleware(req: NextRequest) {
@@ -28,25 +39,29 @@ export async function middleware(req: NextRequest) {
     }
   );
 
-  // IMPORTANT: do not add logic between createServerClient and getUser.
   const { data: { user } } = await supabase.auth.getUser();
-
   const path = req.nextUrl.pathname;
 
-  // Protect routes
-  if (PROTECTED_PREFIXES.some(p => path.startsWith(p)) && !user) {
+  const isProtected = PROTECTED_PREFIXES.some(
+    (p) => path === p || path.startsWith(p + "/")
+  );
+
+  if (isProtected && !user) {
     const url = req.nextUrl.clone();
     url.pathname = "/auth/login";
-    url.searchParams.set("next", path);
+    const nextPath = path + (req.nextUrl.search || "");
+    url.searchParams.set("next", nextPath);
     return NextResponse.redirect(url);
   }
 
-  // Redirect signed-in users away from auth pages
-  if (AUTH_PREFIXES.some(p => path.startsWith(p)) && user) {
-    return NextResponse.redirect(new URL("/", req.url));
+  const isAuthPage = AUTH_PREFIXES.some(
+    (p) => path === p || path.startsWith(p + "/")
+  );
+
+  if (isAuthPage && user) {
+    return NextResponse.redirect(new URL("/solve", req.url));
   }
 
-  // Admin role check
   if (path.startsWith("/admin") && user) {
     const { data: profile } = await supabase
       .from("profiles")
@@ -64,6 +79,6 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|pdf|ico)$).*)"
   ]
 };

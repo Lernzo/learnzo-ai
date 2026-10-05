@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { CheckoutButton } from "./CheckoutButton";
 import { DEFAULT_PRICING } from "@/lib/config/pricing";
 import { isPaymentsConfigured } from "@/lib/payments";
+import { createServerSupabase } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -13,8 +14,12 @@ export const metadata: Metadata = {
     "Simple pricing for Learnzo. Start free, upgrade to Learnzo Plus when you need more homework questions, practice sets and printable worksheets."
 };
 
-export default function PricingPage() {
+export default async function PricingPage() {
   const paymentsReady = isPaymentsConfigured();
+
+  const supabase = createServerSupabase();
+  const { data: { user } } = await supabase.auth.getUser();
+  const signedIn = !!user;
 
   return (
     <>
@@ -23,9 +28,9 @@ export default function PricingPage() {
         <div className="max-w-3xl">
           <h1 className="text-4xl font-bold">Learnzo pricing</h1>
           <p className="mt-3 text-slate-600">
-            The free plan is genuinely useful â€” 5 homework questions, 3 practice sets
-            and 1 printable worksheet every month. Upgrade to Learnzo Plus when you
-            need more.
+            The free plan is genuinely useful - 5 homework questions, 3 practice
+            sets and 1 printable worksheet every month. Upgrade to Learnzo Plus
+            when you need more.
           </p>
         </div>
 
@@ -76,7 +81,7 @@ export default function PricingPage() {
                   <div className="text-3xl font-bold">Free</div>
                 ) : (
                   <div className="text-3xl font-bold">
-                    &#8377;{plan.price_inr}
+                    Rs. {plan.price_inr}
                     <span className="text-base font-medium text-slate-500">
                       /{plan.interval}
                     </span>
@@ -104,6 +109,7 @@ export default function PricingPage() {
                   planId={plan.id}
                   priceInr={plan.price_inr}
                   paymentsReady={paymentsReady}
+                  signedIn={signedIn}
                 />
               </div>
             </Card>
@@ -115,11 +121,11 @@ export default function PricingPage() {
           <ul className="mt-3 list-disc list-inside text-slate-700 space-y-2">
             <li>
               Payments are handled by Razorpay. All payment verification happens
-              server-side â€” the browser never decides whether a payment succeeded.
+              server-side. The browser never decides whether a payment succeeded.
             </li>
             <li>
-              Subscriptions are tied to your account. You can cancel any time and keep
-              access until the end of your billing period.
+              Subscriptions are tied to your account. You can cancel any time and
+              keep access until the end of your billing period.
             </li>
             <li>
               If you were charged but the subscription did not activate, contact
