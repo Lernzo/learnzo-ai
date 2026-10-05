@@ -9,33 +9,32 @@ export function Footer() {
           <Image
             src="/learnzo-logo.png"
             alt="Learnzo - Learn. Understand. Grow."
-            width={200}
-            height={100}
-            className="h-16 w-auto"
+            width={360}
+            height={180}
+            className="h-24 w-auto"
           />
           <p className="mt-4 text-slate-500">Upload. Understand. Practise.</p>
         </div>
         <div>
           <div className="font-semibold">Product</div>
           <ul className="mt-3 space-y-2 text-slate-600">
-            <li><Link href="/#how-it-works">How it works</Link></li>
-            <li><Link href="/#subjects">Subjects</Link></li>
-            <li><Link href="/#final-cta">Try free</Link></li>
+            <li><Link href="/solve">Solve a question</Link></li>
+            <li><Link href="/how-it-works">How it works</Link></li>
+            <li><Link href="/pricing">Pricing</Link></li>
           </ul>
         </div>
         <div>
           <div className="font-semibold">Learn</div>
           <ul className="mt-3 space-y-2 text-slate-600">
-            <li><Link href="/how-it-works">How it works</Link></li>
             <li><Link href="/faq">FAQ</Link></li>
             <li><Link href="/responsible-ai">Responsible AI</Link></li>
-            <li><Link href="/#responsible">Responsible AI</Link></li>
           </ul>
         </div>
         <div>
           <div className="font-semibold">Company</div>
           <ul className="mt-3 space-y-2 text-slate-600">
             <li><Link href="/">Home</Link></li>
+            <li><Link href="/sales">Why Learnzo</Link></li>
           </ul>
         </div>
       </div>
