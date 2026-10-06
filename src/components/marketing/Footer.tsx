@@ -32,8 +32,13 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-slate-100 py-5 text-center text-xs text-slate-500">
-        &copy; {new Date().getFullYear()} Learnzo &middot; learnzo.online
+      <div className="border-t border-slate-100 py-5">
+        <div className="container-x flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-slate-500">
+          <span>&copy; {new Date().getFullYear()} Learnzo &middot; learnzo.online</span>
+          <Link href="/privacy" className="hover:text-brand-600">Privacy Policy</Link>
+          <Link href="/terms" className="hover:text-brand-600">Terms of Service</Link>
+          <Link href="/refund-policy" className="hover:text-brand-600">Refund &amp; Cancellation</Link>
+        </div>
       </div>
     </footer>
   );

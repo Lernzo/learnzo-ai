@@ -1,29 +1,23 @@
-/**
- * Pricing is defined here (not hardcoded in the UI) so it can later be
- * overridden at runtime from the admin_settings table without a redeploy.
- *
- * amount_inr is the amount CHARGED IN RUPEES (not paise).
- * The Razorpay adapter multiplies by 100 to get paise.
- */
+export type PlanId = "FREE" | "PLUS_MONTHLY";
+
 export interface Plan {
   id: PlanId;
   name: string;
   price_inr: number;
-  interval: "month" | "year";
+  original_price_inr?: number;
+  interval: "month";
   badge?: string;
-  tagline: string;
+  bestFor: string;
+  headline: string;
+  subtitle: string;
   features: string[];
+  ctaText: string;
+  footnote: string;
+  limitedTimeOffer?: boolean;
   highlighted?: boolean;
 }
 
-export const PLAN_IDS = [
-  "FREE",
-  "PLUS_MONTHLY",
-  "PLUS_YEARLY",
-  "FAMILY_YEARLY"
-] as const;
-
-export type PlanId = typeof PLAN_IDS[number];
+export const PLAN_IDS: readonly PlanId[] = ["FREE", "PLUS_MONTHLY"] as const;
 
 export const DEFAULT_PRICING = {
   currency: "INR" as const,
@@ -33,56 +27,50 @@ export const DEFAULT_PRICING = {
       name: "Free",
       price_inr: 0,
       interval: "month",
-      tagline: "Try Learnzo before you upgrade",
+      bestFor: "Try before you pay",
+      headline: "Start Free",
+      subtitle: "See how Learnzo works before upgrading.",
+      ctaText: "Start Free",
       features: [
-        "5 homework questions per month",
-        "Step-by-step explanation and concept",
-        "3 practice sets per month",
-        "1 printable worksheet per month",
-        "Full access to all 5 explanation modes"
-      ]
+        "10 homework questions every month",
+        "Understand every step, not just the answer",
+        "Photo upload and typed questions",
+        "3 explanation modes",
+        "5 practice sets every month",
+        "1 printable worksheet every month",
+        "Maths, Science and English",
+        "No credit card required"
+      ],
+      footnote: "No credit card required."
     },
     {
       id: "PLUS_MONTHLY",
-      name: "Learnzo Plus",
+      name: "Plus",
       price_inr: 99,
+      original_price_inr: 499,
       interval: "month",
-      tagline: "For regular homework help",
-      features: [
-        "400 questions per month",
-        "200 practice sets per month",
-        "60 printable worksheets per month",
-        "Priority AI processing",
-        "Everything in Free"
-      ]
-    },
-    {
-      id: "PLUS_YEARLY",
-      name: "Learnzo Plus",
-      price_inr: 799,
-      interval: "year",
-      badge: "Save 33%",
-      tagline: "Best value for one student",
+      badge: "Get Unlimited Homework @99 only",
+      bestFor: "For everyday homework help",
+      headline: "Plus",
+      subtitle: "Unlimited homework help for the whole month.",
+      ctaText: "Get Unlimited Homework @99",
       highlighted: true,
+      limitedTimeOffer: true,
       features: [
-        "Everything in Plus Monthly",
-        "2 months free compared to monthly",
-        "Priority support"
-      ]
-    },
-    {
-      id: "FAMILY_YEARLY",
-      name: "Family",
-      price_inr: 1499,
-      interval: "year",
-      badge: "Up to 4 students",
-      tagline: "For siblings",
-      features: [
-        "Everything in Plus Yearly",
-        "Up to 4 student profiles",
-        "Shared parent dashboard",
-        "Priority support"
-      ]
+        "Unlimited homework questions every month",
+        "Upload homework photos and PDFs",
+        "Unlimited explanation modes",
+        "\"I Still Don't Understand\" - a completely fresh explanation",
+        "Unlimited practice sets every month",
+        "Unlimited printable worksheets every month",
+        "Unlimited questions & answers history",
+        "Priority AI - faster answers",
+        "Maths, Science, English and Computer Science",
+        "Class and board selection",
+        "No ads",
+        "Everything in Free"
+      ],
+      footnote: "Rs. 99 for one month. No auto-renewal."
     }
   ] satisfies Plan[]
 };
@@ -91,9 +79,6 @@ export function getPlan(id: string): Plan | null {
   return (DEFAULT_PRICING.plans as Plan[]).find((p) => p.id === id) ?? null;
 }
 
-/** Duration of a paid plan in days. Used for computing expires_at. */
 export const PLAN_DURATIONS_DAYS: Record<string, number> = {
-  PLUS_MONTHLY: 30,
-  PLUS_YEARLY: 365,
-  FAMILY_YEARLY: 365
+  PLUS_MONTHLY: 30
 };

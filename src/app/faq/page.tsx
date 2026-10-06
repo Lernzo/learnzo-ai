@@ -72,8 +72,8 @@ const FAQS: { q: string; a: string }[] = [
     a: "By a payment provider with Razorpay as the default. All payment verification happens server-side - the browser never decides whether a payment succeeded. The webhook is also verified server-side before any subscription is granted."
   },
   {
-    q: "Can I cancel?",
-    a: "Yes. You keep access until the end of your billing period. Cancellation does not delete your question history."
+    q: "Do plans auto-renew?",
+    a: "No. Plans are one-time purchases. You buy a plan and use Learnzo for its stated duration. There is no automatic renewal, and your question history is preserved."
   },
   {
     q: "What happens to my uploaded homework?",

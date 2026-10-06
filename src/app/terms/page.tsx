@@ -37,11 +37,11 @@ export default function TermsPage() {
           </section>
           <section>
             <h2 className="text-xl font-bold text-slate-900">6. Plans and pricing</h2>
-            <p className="mt-2">Learnzo offers a free plan and paid plans. Current pricing is on our Pricing page. Prices are in INR, inclusive of applicable taxes.</p>
+            <p className="mt-2">Learnzo offers a free plan and paid plans. Paid plans are one-time purchases valid for the stated duration (monthly or yearly). Current pricing is on our Pricing page. Prices are in INR, inclusive of applicable taxes.</p>
           </section>
           <section>
             <h2 className="text-xl font-bold text-slate-900">7. Payments</h2>
-            <p className="mt-2">Payments are processed by Razorpay. We do not store card or UPI details. Refunds are governed by our Refund Policy.</p>
+            <p className="mt-2">Payments are processed by Razorpay. We do not store card or UPI details. Plans are one-time purchases valid for their stated duration. There is no automatic renewal and no recurring subscription. Refunds are only issued as described in our Refund Policy.</p>
           </section>
           <section>
             <h2 className="text-xl font-bold text-slate-900">8. AI-generated content</h2>
