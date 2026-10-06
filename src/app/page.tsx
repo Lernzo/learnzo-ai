@@ -24,7 +24,7 @@ const SUBJECTS = [
   { e: "\u2797", l: "Mathematics",       d: "Arithmetic, fractions, algebra, geometry and word problems." },
   { e: "\uD83D\uDD2C", l: "Science",     d: "Physics, chemistry and biology concepts." },
   { e: "\uD83D\uDCD6", l: "English",     d: "Grammar, comprehension and writing." },
-  { e: "\uD83D\uDCBB", l: "Computer Science", d: "Python, Java, HTML, SQL. Code traced line by line." }
+  { e: "\uD83D\uDCBB", l: "Computer Science", d: "From C to AI. Full tech stack. Code traced line by line." }
 ];
 
 const TRUST = [
@@ -40,7 +40,6 @@ export default function HomePage() {
       <Nav />
       <main>
 
-        {/* TRUST STRIP */}
         <section className="bg-white border-b border-slate-100">
           <div className="container-x py-4">
             <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-2 text-sm">
@@ -50,7 +49,7 @@ export default function HomePage() {
               </div>
               <div className="flex items-center gap-2 text-slate-700">
                 <span className="text-emerald-500">&#10003;</span>
-                <span>Classes 6-12 &middot; Maths, Science, English</span>
+                <span>Classes 6-12 &middot; Maths, Science, English, CS</span>
               </div>
               <div className="flex items-center gap-2 text-slate-700">
                 <span className="text-emerald-500">&#10003;</span>
@@ -64,24 +63,27 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* COMPUTER SCIENCE SECTION */}
         <section className="bg-gradient-to-br from-brand-50 via-white to-emerald-50/40 border-b border-slate-100">
           <div className="container-x py-10 lg:py-12">
             <div className="grid lg:grid-cols-2 gap-10 items-start">
 
               <div>
                 <div className="inline-flex items-center gap-2 rounded-full bg-emerald-100 text-emerald-800 px-4 py-1.5 text-xs font-bold uppercase tracking-wider">
-                  <span>&#128187;</span> New: Computer Science support
+                  <span>&#128187;</span> New: Full Computer Science support
                 </div>
                 <h2 className="mt-4 text-3xl lg:text-4xl font-bold">
-                  Now helping with <span className="text-brand-600">Python, Java, HTML and SQL.</span>
+                  From C to AI, we help with the
+                  <span className="text-brand-600"> full tech stack.</span>
                 </h2>
                 <p className="mt-4 text-slate-700 leading-relaxed">
-                  Paste your programming homework. Learnzo identifies the language, traces the code line by line, shows the expected output, and explains any error in plain English.
+                  Programming languages, web development, mobile apps, databases,
+                  data science, machine learning, AI, and DevOps. Paste your
+                  homework. Learnzo identifies the language, traces the code line
+                  by line, and explains any error in plain English.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   <Link href="/solve">
-                    <Button size="lg">Try a Computer Science question</Button>
+                    <Button size="lg">Try a CS question</Button>
                   </Link>
                   <Link href="/faq">
                     <Button size="lg" variant="outline">How it works</Button>
@@ -105,33 +107,60 @@ export default function HomePage() {
                   <div className="w-3 h-3 rounded-full bg-emerald-500" />
                   <span className="ml-3 text-xs text-slate-400 font-mono">learnzo_trace.py</span>
                 </div>
-                <pre className="text-xs leading-relaxed font-mono text-emerald-300 overflow-x-auto whitespace-pre">{`def sum_even(nums):
-    total = 0
-    for n in nums:
-        if n % 2 == 0:
-            total += n
-    return total
+                <pre className="text-xs leading-relaxed font-mono text-emerald-300 overflow-x-auto whitespace-pre">{`from sklearn.linear_model import LinearRegression
+import numpy as np
 
-print(sum_even([1, 2, 3, 4, 5, 6]))
+X = np.array([[1], [2], [3], [4]])
+y = np.array([2, 4, 6, 8])
 
-# Step 1: nums = [1,2,3,4,5,6]
-# Step 2: n=1 -> odd  -> skip
-# Step 3: n=2 -> even -> total=2
-# Step 4: n=3 -> odd  -> skip
-# Step 5: n=4 -> even -> total=6
-# Step 6: n=5 -> odd  -> skip
-# Step 7: n=6 -> even -> total=12
-# Output: 12`}</pre>
+model = LinearRegression()
+model.fit(X, y)
+
+print(model.predict([[5]]))
+
+# Step 1: X has 4 samples, 1 feature each
+# Step 2: fit() learns y = 2 * x
+# Step 3: predict([5]) -> 10
+# Output: [10.]
+
+# Model learned slope = 2, intercept = 0`}</pre>
                 <div className="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-400">
                   Learnzo traces every variable, line by line.
                 </div>
               </div>
 
             </div>
+
+            <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="rounded-2xl border border-slate-200 bg-white p-5">
+                <div className="text-xs font-bold uppercase tracking-wider text-brand-700">Languages</div>
+                <p className="mt-2 text-sm text-slate-700 leading-relaxed">
+                  C, C++, Java, Python, C#/.NET, JavaScript, TypeScript, Go, Rust, Kotlin, Swift, PHP, R
+                </p>
+              </div>
+              <div className="rounded-2xl border border-slate-200 bg-white p-5">
+                <div className="text-xs font-bold uppercase tracking-wider text-brand-700">Web &amp; Mobile</div>
+                <p className="mt-2 text-sm text-slate-700 leading-relaxed">
+                  HTML, CSS, React, Next.js, Vue, Angular, Node.js, Django, Flask, Spring Boot, React Native, Flutter
+                </p>
+              </div>
+              <div className="rounded-2xl border border-slate-200 bg-white p-5">
+                <div className="text-xs font-bold uppercase tracking-wider text-brand-700">Data, ML &amp; AI</div>
+                <p className="mt-2 text-sm text-slate-700 leading-relaxed">
+                  pandas, NumPy, scikit-learn, TensorFlow, PyTorch, neural networks, LLMs, data visualization
+                </p>
+              </div>
+              <div className="rounded-2xl border border-slate-200 bg-white p-5">
+                <div className="text-xs font-bold uppercase tracking-wider text-brand-700">CS Fundamentals</div>
+                <p className="mt-2 text-sm text-slate-700 leading-relaxed">
+                  Data Structures, Algorithms, Big-O, OOP, DBMS, SQL, OS, Networks, Git, Docker, Cloud basics
+                </p>
+              </div>
+            </div>
+
           </div>
         </section>
 
-        {/* HERO */}
         <section className="relative overflow-hidden">
           <div className="container-x grid lg:grid-cols-2 gap-12 items-start py-12 lg:py-16">
             <div>
@@ -198,7 +227,6 @@ print(sum_even([1, 2, 3, 4, 5, 6]))
           </div>
         </section>
 
-        {/* HOW IT WORKS */}
         <section id="how-it-works" className="bg-white border-y border-slate-100">
           <div className="container-x py-12 lg:py-16">
             <h2 className="text-3xl lg:text-4xl font-bold">How Learnzo works</h2>
@@ -220,7 +248,6 @@ print(sum_even([1, 2, 3, 4, 5, 6]))
           </div>
         </section>
 
-        {/* WHY */}
         <section id="why" className="container-x py-12 lg:py-16">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div>
@@ -266,7 +293,6 @@ print(sum_even([1, 2, 3, 4, 5, 6]))
           </div>
         </section>
 
-        {/* SUBJECTS */}
         <section id="subjects" className="bg-white border-y border-slate-100">
           <div className="container-x py-12 lg:py-16">
             <h2 className="text-3xl lg:text-4xl font-bold">Subjects supported</h2>
@@ -285,7 +311,6 @@ print(sum_even([1, 2, 3, 4, 5, 6]))
           </div>
         </section>
 
-        {/* PARENT + STUDENT */}
         <section className="container-x py-12 lg:py-16 grid lg:grid-cols-2 gap-10">
           <Card>
             <h3 className="text-2xl font-bold">For parents</h3>
@@ -307,7 +332,6 @@ print(sum_even([1, 2, 3, 4, 5, 6]))
           </Card>
         </section>
 
-        {/* RESPONSIBLE AI */}
         <section id="responsible" className="bg-slate-900 text-white">
           <div className="container-x py-12">
             <h3 className="text-2xl font-bold">Responsible by design</h3>
@@ -321,7 +345,6 @@ print(sum_even([1, 2, 3, 4, 5, 6]))
           </div>
         </section>
 
-        {/* FINAL CTA */}
         <section id="final-cta" className="bg-brand-600 text-white">
           <div className="container-x py-12 lg:py-16 text-center">
             <h2 className="text-3xl lg:text-5xl font-bold">
