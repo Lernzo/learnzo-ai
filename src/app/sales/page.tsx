@@ -251,7 +251,7 @@ export default function SalesPage() {
 
         {/* ---------------- PROBLEM ---------------- */}
         <section className="bg-white border-y border-slate-100">
-          <div className="container-x py-16 lg:py-20">
+          <div className="container-x py-10 lg:py-12">
             <div className="max-w-2xl">
               <Badge className="bg-rose-50 text-rose-700">The problem</Badge>
               <h2 className="mt-4 text-3xl lg:text-4xl font-bold">
@@ -276,7 +276,7 @@ export default function SalesPage() {
         </section>
 
         {/* ---------------- SOLUTION / INTRO ---------------- */}
-        <section className="container-x py-16 lg:py-20">
+        <section className="container-x py-10 lg:py-12">
           <div className="max-w-3xl">
             <Badge>The Learnzo way</Badge>
             <h2 className="mt-4 text-3xl lg:text-4xl font-bold">
@@ -303,7 +303,7 @@ export default function SalesPage() {
 
         {/* ---------------- HOW IT WORKS ---------------- */}
         <section id="how" className="bg-white border-y border-slate-100">
-          <div className="container-x py-16 lg:py-20">
+          <div className="container-x py-10 lg:py-12">
             <h2 className="text-3xl lg:text-4xl font-bold">How it works</h2>
             <p className="mt-3 text-slate-600 max-w-2xl">
               Four steps. About a minute from photo to understanding.
@@ -324,7 +324,7 @@ export default function SalesPage() {
         </section>
 
         {/* ---------------- I STILL DON'T UNDERSTAND ---------------- */}
-        <section className="container-x py-16 lg:py-20">
+        <section className="container-x py-10 lg:py-12">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge className="bg-amber-50 text-amber-700">
@@ -378,7 +378,7 @@ export default function SalesPage() {
 
         {/* ---------------- SUBJECTS ---------------- */}
         <section className="bg-white border-y border-slate-100">
-          <div className="container-x py-16 lg:py-20">
+          <div className="container-x py-10 lg:py-12">
             <h2 className="text-3xl lg:text-4xl font-bold">
               Maths, Science and English. Classes 6 to 12.
             </h2>
@@ -405,7 +405,7 @@ export default function SalesPage() {
         </section>
 
         {/* ---------------- PRICING ---------------- */}
-        <section className="container-x py-16 lg:py-20">
+        <section className="container-x py-10 lg:py-12">
           <div className="max-w-2xl">
             <Badge>Pricing</Badge>
             <h2 className="mt-4 text-3xl lg:text-4xl font-bold">
@@ -476,7 +476,7 @@ export default function SalesPage() {
 
         {/* ---------------- FAQ ---------------- */}
         <section className="bg-white border-y border-slate-100">
-          <div className="container-x py-16 lg:py-20 max-w-3xl">
+          <div className="container-x py-10 lg:py-12 max-w-3xl">
             <h2 className="text-3xl lg:text-4xl font-bold">Common questions</h2>
 
             <div className="mt-8 divide-y divide-slate-200">
@@ -497,7 +497,7 @@ export default function SalesPage() {
 
         {/* ---------------- FINAL CTA ---------------- */}
         <section className="bg-brand-600 text-white">
-          <div className="container-x py-16 lg:py-24 text-center">
+          <div className="container-x py-10 lg:py-12 text-center">
             <h2 className="text-3xl lg:text-5xl font-bold">
               Try it with tonight&rsquo;s homework.
             </h2>

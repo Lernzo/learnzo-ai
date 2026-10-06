@@ -111,7 +111,7 @@ export default function KidsPage() {
 
         {/* HERO */}
         <section className="bg-gradient-to-b from-brand-50/70 to-white">
-          <div className="container-x py-14 lg:py-20 grid lg:grid-cols-2 gap-12 items-center">
+          <div className="container-x py-10 lg:py-14 grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-emerald-100 text-emerald-800 px-4 py-1.5 text-xs font-bold uppercase tracking-wider">
                 <span>&#127873;</span> Free Download
@@ -213,7 +213,7 @@ export default function KidsPage() {
         </section>
 
         {/* WHAT IS INSIDE - themes detail */}
-        <section className="container-x py-16 lg:py-20">
+        <section className="container-x py-10 lg:py-12">
           <div className="max-w-2xl">
             <Badge>Nine themes inside</Badge>
             <h2 className="mt-4 text-3xl lg:text-4xl font-bold">
@@ -238,7 +238,7 @@ export default function KidsPage() {
 
         {/* HOW TO USE */}
         <section id="how" className="bg-white border-y border-slate-100">
-          <div className="container-x py-16 lg:py-20">
+          <div className="container-x py-10 lg:py-12">
             <div className="max-w-2xl">
               <Badge>How to use it</Badge>
               <h2 className="mt-4 text-3xl lg:text-4xl font-bold">
@@ -275,7 +275,7 @@ export default function KidsPage() {
         </section>
 
         {/* WHY COLORING MATTERS */}
-        <section className="container-x py-16 lg:py-20">
+        <section className="container-x py-10 lg:py-12">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge className="bg-amber-50 text-amber-700">
@@ -358,7 +358,7 @@ export default function KidsPage() {
 
         {/* FAQ */}
         <section className="bg-white border-y border-slate-100">
-          <div className="container-x py-16 lg:py-20 max-w-3xl">
+          <div className="container-x py-10 lg:py-12 max-w-3xl">
             <h2 className="text-3xl lg:text-4xl font-bold">Common questions</h2>
 
             <div className="mt-8 divide-y divide-slate-200">
@@ -379,7 +379,7 @@ export default function KidsPage() {
 
         {/* FINAL CTA */}
         <section className="bg-brand-600 text-white">
-          <div className="container-x py-16 lg:py-20 text-center">
+          <div className="container-x py-10 lg:py-12 text-center">
             <h2 className="text-3xl lg:text-5xl font-bold">
               Download it now. Print it tonight.
             </h2>

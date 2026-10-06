@@ -19,7 +19,7 @@ export default function AboutPage() {
       <main>
 
         <section className="bg-gradient-to-b from-brand-50/70 to-white">
-          <div className="container-x py-14 lg:py-20 max-w-4xl">
+          <div className="container-x py-10 lg:py-14 max-w-4xl">
             <Badge>About Learnzo</Badge>
             <h1 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
               Homework help that
@@ -159,7 +159,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="container-x py-14 text-center max-w-3xl">
+        <section className="container-x py-10 text-center max-w-3xl">
           <h2 className="text-2xl lg:text-3xl font-bold">
             Try it with a homework question
           </h2>

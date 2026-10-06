@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Nav } from "@/components/marketing/Nav";
 import { Footer } from "@/components/marketing/Footer";
 import { Button } from "@/components/ui/Button";
@@ -21,61 +20,17 @@ const MODES = [
   { t: "Try It Myself",             d: "A similar question without revealing the answer." }
 ];
 
-const BOARDS = [
-  {
-    id: "cbse",
-    name: "CBSE",
-    full: "Central Board of Secondary Education",
-    body:
-      "Aligned with the NCERT syllabus and the National Education Policy 2020. " +
-      "Explanations emphasise reasoning and application-based questions, matching " +
-      "the board's competency-based approach.",
-    classes: "Classes 6 - 12"
-  },
-  {
-    id: "icse",
-    name: "ICSE",
-    full: "Indian Certificate of Secondary Education",
-    body:
-      "Built for the ICSE's detailed syllabus. Explanations go deeper on concept " +
-      "clarity and language usage, matching the board's focus on writing quality " +
-      "and analytical reasoning.",
-    classes: "Classes 6 - 10"
-  },
-  {
-    id: "state",
-    name: "State Boards",
-    full: "SCERT-led State Curricula",
-    body:
-      "Designed so state-specific syllabus modules can be added. The engine already " +
-      "recognises the 5+3+3+4 structure from NEP 2020 and adapts to each state's " +
-      "SCERT framework.",
-    classes: "Classes 6 - 12"
-  }
-];
-
 const SUBJECTS = [
-  {
-    e: "\u2797",
-    l: "Mathematics",
-    d: "Arithmetic, fractions, algebra, geometry and word problems. Every calculation is shown."
-  },
-  {
-    e: "\uD83D\uDD2C",
-    l: "Science",
-    d: "Physics, Chemistry and Biology. Facts are kept separate from assumptions."
-  },
-  {
-    e: "\uD83D\uDCD6",
-    l: "English",
-    d: "Grammar, comprehension and writing. Rules are explained, not just applied."
-  }
+  { e: "\u2797", l: "Mathematics",       d: "Arithmetic, fractions, algebra, geometry and word problems." },
+  { e: "\uD83D\uDD2C", l: "Science",     d: "Physics, chemistry and biology concepts." },
+  { e: "\uD83D\uDCD6", l: "English",     d: "Grammar, comprehension and writing." },
+  { e: "\uD83D\uDCBB", l: "Computer Science", d: "Python, Java, HTML, SQL. Code traced line by line." }
 ];
 
 const TRUST = [
-  { label: "NEP 2020 aligned", note: "Follows the 5+3+3+4 structure" },
-  { label: "NCERT-based",       note: "Uses the National Curriculum Framework" },
-  { label: "CBSE & ICSE ready", note: "Classes 6-12, Maths, Science, English" },
+  { label: "NEP 2020 aligned",     note: "Follows the 5+3+3+4 structure" },
+  { label: "NCERT-based",          note: "Uses the National Curriculum Framework" },
+  { label: "CBSE & ICSE ready",    note: "Classes 6-12, Maths, Science, English" },
   { label: "State-board friendly", note: "Designed for SCERT-based curricula" }
 ];
 
@@ -85,11 +40,10 @@ export default function HomePage() {
       <Nav />
       <main>
 
-
         {/* TRUST STRIP */}
         <section className="bg-white border-b border-slate-100">
-          <div className="container-x py-5">
-            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm">
+          <div className="container-x py-4">
+            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-2 text-sm">
               <div className="flex items-center gap-2 text-slate-700">
                 <span className="text-emerald-500">&#10003;</span>
                 <span>Built for CBSE, ICSE &amp; State Boards</span>
@@ -108,20 +62,88 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </section>        {/* HERO */}
+        </section>
+
+        {/* COMPUTER SCIENCE SECTION */}
+        <section className="bg-gradient-to-br from-brand-50 via-white to-emerald-50/40 border-b border-slate-100">
+          <div className="container-x py-10 lg:py-12">
+            <div className="grid lg:grid-cols-2 gap-10 items-start">
+
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full bg-emerald-100 text-emerald-800 px-4 py-1.5 text-xs font-bold uppercase tracking-wider">
+                  <span>&#128187;</span> New: Computer Science support
+                </div>
+                <h2 className="mt-4 text-3xl lg:text-4xl font-bold">
+                  Now helping with <span className="text-brand-600">Python, Java, HTML and SQL.</span>
+                </h2>
+                <p className="mt-4 text-slate-700 leading-relaxed">
+                  Paste your programming homework. Learnzo identifies the language, traces the code line by line, shows the expected output, and explains any error in plain English.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Link href="/solve">
+                    <Button size="lg">Try a Computer Science question</Button>
+                  </Link>
+                  <Link href="/faq">
+                    <Button size="lg" variant="outline">How it works</Button>
+                  </Link>
+                </div>
+
+                <div className="mt-8 grid grid-cols-2 gap-4 border-t border-slate-200 pt-6">
+                  {TRUST.map((item, i) => (
+                    <div key={i}>
+                      <div className="text-xs font-semibold text-slate-900">{item.label}</div>
+                      <div className="text-xs text-slate-500 mt-0.5">{item.note}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-2xl bg-slate-900 border border-slate-800 p-5 shadow-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-3 h-3 rounded-full bg-rose-500" />
+                  <div className="w-3 h-3 rounded-full bg-amber-400" />
+                  <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                  <span className="ml-3 text-xs text-slate-400 font-mono">learnzo_trace.py</span>
+                </div>
+                <pre className="text-xs leading-relaxed font-mono text-emerald-300 overflow-x-auto whitespace-pre">{`def sum_even(nums):
+    total = 0
+    for n in nums:
+        if n % 2 == 0:
+            total += n
+    return total
+
+print(sum_even([1, 2, 3, 4, 5, 6]))
+
+# Step 1: nums = [1,2,3,4,5,6]
+# Step 2: n=1 -> odd  -> skip
+# Step 3: n=2 -> even -> total=2
+# Step 4: n=3 -> odd  -> skip
+# Step 5: n=4 -> even -> total=6
+# Step 6: n=5 -> odd  -> skip
+# Step 7: n=6 -> even -> total=12
+# Output: 12`}</pre>
+                <div className="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-400">
+                  Learnzo traces every variable, line by line.
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* HERO */}
         <section className="relative overflow-hidden">
-          <div className="container-x grid lg:grid-cols-2 gap-12 items-center py-16 lg:py-24">
+          <div className="container-x grid lg:grid-cols-2 gap-12 items-start py-12 lg:py-16">
             <div>
               <Badge>Built for CBSE &middot; ICSE &middot; State Boards</Badge>
-
-              
-
+              <h1 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
+                Step-by-step homework help.
+                <span className="block text-brand-600 mt-2">For Classes 6 to 12.</span>
+              </h1>
               <p className="mt-6 text-lg text-slate-600 max-w-xl">
-                Step-by-step homework help for CBSE, ICSE and State Board students
-                in Classes 6-12. Master Mathematics, Science and English by
+                Master Mathematics, Science, English and Computer Science by
                 understanding the method, not just the answer.
               </p>
-
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link href="/solve">
                   <Button size="lg">Try Learnzo Free</Button>
@@ -130,7 +152,6 @@ export default function HomePage() {
                   <Button size="lg" variant="outline">See How It Works</Button>
                 </Link>
               </div>
-
               <p className="mt-4 text-sm text-slate-500">
                 No credit card. Free plan includes 5 questions per month.
               </p>
@@ -161,9 +182,7 @@ export default function HomePage() {
               <div className="mt-4 rounded-2xl border border-emerald-100 bg-emerald-50/70 p-4">
                 <div className="text-xs font-semibold text-emerald-700">SIMPLE EXPLANATION</div>
                 <p className="mt-2 text-sm text-slate-800">
-                  Think of 24 apples in a basket. If 6 friends take turns picking one
-                  apple each until the basket is empty, each round uses 6 apples.
-                  After 4 rounds, all 24 are gone.
+                  Think of 24 apples in a basket. If 6 friends take turns picking one apple each until the basket is empty, each round uses 6 apples. After 4 rounds, all 24 are gone.
                 </p>
               </div>
 
@@ -179,82 +198,31 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* TRUST STRIP - new */}
-        <section className="bg-white border-y border-slate-100">
-          <div className="container-x py-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {TRUST.map((t, i) => (
-              <div key={i}>
-                <div className="text-sm font-semibold text-slate-900">{t.label}</div>
-                <div className="text-xs text-slate-500 mt-1">{t.note}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* HOW IT WORKS */}
-        <section id="how-it-works" className="container-x py-16 lg:py-20">
-          <h2 className="text-3xl lg:text-4xl font-bold">How Learnzo works</h2>
-          <p className="mt-3 text-slate-600 max-w-2xl">
-            Four small steps from homework to understanding.
-          </p>
-          <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {STEPS.map((s, i) => (
-              <Card key={i} className="h-full">
-                <div className="text-3xl">{s.e}</div>
-                <div className="mt-3 text-xs font-semibold text-slate-500">
-                  STEP {i + 1}
-                </div>
-                <div className="mt-1 text-lg font-semibold">{s.t}</div>
-                <p className="mt-2 text-sm text-slate-600">{s.d}</p>
-              </Card>
-            ))}
-          </div>
-        </section>
-
-        {/* CURRICULUM ALIGNMENT - new */}
-        <section id="curriculum" className="bg-white border-y border-slate-100">
-          <div className="container-x py-16 lg:py-20">
-            <div className="max-w-3xl">
-              <Badge>Built around the Indian school system</Badge>
-              <h2 className="mt-4 text-3xl lg:text-4xl font-bold">
-                Aligned with DSEL, NCERT and NEP 2020
-              </h2>
-              <p className="mt-4 text-slate-600">
-                The Indian school system is guided by the Department of School
-                Education &amp; Literacy (DSEL), which sets policy through the
-                National Education Policy 2020 and the new 5+3+3+4 structure.
-                NCERT develops the National Curriculum Framework and learning
-                outcomes. Learnzo is designed to work with this ecosystem, not
-                against it.
-              </p>
-            </div>
-
-            <div className="mt-10 grid md:grid-cols-3 gap-6">
-              {BOARDS.map((b) => (
-                <Card key={b.id} className="h-full flex flex-col">
-                  <div className="text-xs font-semibold text-slate-400 uppercase">
-                    {b.classes}
+        <section id="how-it-works" className="bg-white border-y border-slate-100">
+          <div className="container-x py-12 lg:py-16">
+            <h2 className="text-3xl lg:text-4xl font-bold">How Learnzo works</h2>
+            <p className="mt-3 text-slate-600 max-w-2xl">
+              Four small steps from homework to understanding.
+            </p>
+            <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {STEPS.map((s, i) => (
+                <Card key={i} className="h-full">
+                  <div className="text-3xl">{s.e}</div>
+                  <div className="mt-3 text-xs font-semibold text-slate-500">
+                    STEP {i + 1}
                   </div>
-                  <h3 className="mt-2 text-xl font-bold">{b.name}</h3>
-                  <div className="text-xs text-slate-500">{b.full}</div>
-                  <p className="mt-3 text-sm text-slate-700 leading-relaxed flex-1">
-                    {b.body}
-                  </p>
+                  <div className="mt-1 text-lg font-semibold">{s.t}</div>
+                  <p className="mt-2 text-sm text-slate-600">{s.d}</p>
                 </Card>
               ))}
             </div>
-
-            <p className="mt-8 text-sm text-slate-500 max-w-3xl">
-              Learnzo is an independent product and is not affiliated with or
-              endorsed by DSEL, NCERT, CBSE, ICSE or any State Board. Curriculum
-              alignment reflects the frameworks published by those bodies.
-            </p>
           </div>
         </section>
 
-        {/* WHY / STILL DON'T UNDERSTAND */}
-        <section id="why" className="container-x py-16 lg:py-24">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        {/* WHY */}
+        <section id="why" className="container-x py-12 lg:py-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div>
               <Badge className="bg-amber-50 text-amber-700">
                 The Learnzo difference
@@ -292,8 +260,7 @@ export default function HomePage() {
                 </div>
               </div>
               <p className="mt-4 text-xs text-slate-500">
-                Each mode is generated fresh for the specific question &mdash;
-                not a template.
+                Each mode is generated fresh for the specific question &mdash; not a template.
               </p>
             </Card>
           </div>
@@ -301,12 +268,12 @@ export default function HomePage() {
 
         {/* SUBJECTS */}
         <section id="subjects" className="bg-white border-y border-slate-100">
-          <div className="container-x py-16 lg:py-20">
+          <div className="container-x py-12 lg:py-16">
             <h2 className="text-3xl lg:text-4xl font-bold">Subjects supported</h2>
             <p className="mt-3 text-slate-600 max-w-2xl">
-              Three core subjects at launch, with more to follow.
+              Four core subjects, all aligned with the Indian curriculum.
             </p>
-            <div className="mt-8 grid sm:grid-cols-3 gap-6">
+            <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {SUBJECTS.map((s, i) => (
                 <Card key={i}>
                   <div className="text-3xl">{s.e}</div>
@@ -319,7 +286,7 @@ export default function HomePage() {
         </section>
 
         {/* PARENT + STUDENT */}
-        <section className="container-x py-16 lg:py-24 grid lg:grid-cols-2 gap-10">
+        <section className="container-x py-12 lg:py-16 grid lg:grid-cols-2 gap-10">
           <Card>
             <h3 className="text-2xl font-bold">For parents</h3>
             <ul className="mt-4 space-y-2 text-slate-700">
@@ -342,22 +309,21 @@ export default function HomePage() {
 
         {/* RESPONSIBLE AI */}
         <section id="responsible" className="bg-slate-900 text-white">
-          <div className="container-x py-14">
+          <div className="container-x py-12">
             <h3 className="text-2xl font-bold">Responsible by design</h3>
             <p className="mt-3 max-w-3xl text-slate-300">
-              Learnzo is designed to support learning. Students should use
-              explanations and practice tools to understand their work rather
-              than simply copy answers. We do not make unsupported claims about
-              educational outcomes and we never fabricate a question from an
-              unclear photo &mdash; if our reader is unsure, we ask the student
-              to correct it.
+              Learnzo is designed to support learning. Students should use explanations
+              and practice tools to understand their work rather than simply copy answers.
+              We do not make unsupported claims about educational outcomes and we never
+              fabricate a question from an unclear photo &mdash; if our reader is unsure,
+              we ask the student to correct it.
             </p>
           </div>
         </section>
 
         {/* FINAL CTA */}
         <section id="final-cta" className="bg-brand-600 text-white">
-          <div className="container-x py-16 lg:py-24 text-center">
+          <div className="container-x py-12 lg:py-16 text-center">
             <h2 className="text-3xl lg:text-5xl font-bold">
               Turn homework into understanding.
             </h2>

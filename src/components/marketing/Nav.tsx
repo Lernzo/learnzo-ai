@@ -12,23 +12,22 @@ export function Nav() {
 
   return (
     <header className="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-slate-100">
-      <div className="container-x flex items-center justify-between min-h-[220px]">
+      <div className="container-x flex items-center justify-between" style={{ height: '180px' }}>
         <Link href="/" className="flex items-center shrink-0" aria-label="Learnzo home">
           <Image
             src="/learnzo-logo.png"
             alt="Learnzo"
-            width={400}
-            height={200}
+            width={800}
+            height={400}
             priority
-            className="h-[200px] w-auto"
+            style={{ height: '160px', width: 'auto' }}
           />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-5 text-sm text-slate-700">
+        <nav className="hidden lg:flex items-center gap-6 text-sm text-slate-700">
           <Link href="/about" className="hover:text-brand-600">About</Link>
           <Link href="/solve" className="hover:text-brand-600">Solve</Link>
           <Link href="/kids" className="hover:text-brand-600">Kids</Link>
-          <Link href="/jobs" className="hover:text-brand-600">Jobs</Link>
           <Link href="/pricing" className="hover:text-brand-600">Pricing</Link>
           <Link href="/faq" className="hover:text-brand-600">FAQ</Link>
           <Link href="/how-it-works" className="hover:text-brand-600">How it works</Link>
@@ -58,7 +57,6 @@ export function Nav() {
             <Link href="/about" onClick={() => setOpen(false)}>About</Link>
             <Link href="/solve" onClick={() => setOpen(false)}>Solve</Link>
             <Link href="/kids" onClick={() => setOpen(false)}>Kids</Link>
-            <Link href="/jobs" onClick={() => setOpen(false)}>Jobs</Link>
             <Link href="/pricing" onClick={() => setOpen(false)}>Pricing</Link>
             <Link href="/faq" onClick={() => setOpen(false)}>FAQ</Link>
             <Link href="/how-it-works" onClick={() => setOpen(false)}>How it works</Link>

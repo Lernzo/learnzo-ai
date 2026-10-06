@@ -12,9 +12,9 @@ export function Footer() {
               <Image
                 src="/learnzo-logo.png"
                 alt="Learnzo"
-                width={600}
-                height={300}
-                className="h-50 w-auto"
+                width={800}
+                height={400}
+                style={{ height: '160px', width: 'auto' }}
               />
             </Link>
           </div>
@@ -23,7 +23,6 @@ export function Footer() {
             <Link href="/about" className="hover:text-brand-600">About</Link>
             <Link href="/solve" className="hover:text-brand-600">Solve</Link>
             <Link href="/kids" className="hover:text-brand-600">Kids</Link>
-            <Link href="/jobs" className="hover:text-brand-600">Jobs</Link>
             <Link href="/pricing" className="hover:text-brand-600">Pricing</Link>
             <Link href="/faq" className="hover:text-brand-600">FAQ</Link>
             <Link href="/how-it-works" className="hover:text-brand-600">How it works</Link>
