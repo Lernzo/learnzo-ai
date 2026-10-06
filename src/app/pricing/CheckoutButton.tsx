@@ -12,6 +12,7 @@ interface Props {
   priceInr: number;
   paymentsReady: boolean;
   signedIn: boolean;
+  ctaText?: string;
 }
 
 interface RazorpayHandlerResponse {
@@ -28,7 +29,6 @@ interface RazorpayOptions {
   description: string;
   order_id: string;
   handler: (response: RazorpayHandlerResponse) => void;
-  prefill?: { name?: string; email?: string };
   theme?: { color?: string };
   modal?: { ondismiss?: () => void };
 }
@@ -59,18 +59,36 @@ function loadRazorpayScript(): Promise<void> {
   });
 }
 
-export function CheckoutButton({ planId, priceInr, paymentsReady, signedIn }: Props) {
+export function CheckoutButton({ planId, priceInr, paymentsReady, signedIn, ctaText }: Props) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  if (priceInr === 0) {
+    return (
+      <Link href="/solve">
+        <Button variant="outline" className="w-full">
+          {ctaText ?? "Start Free"}
+        </Button>
+      </Link>
+    );
+  }
+
+  if (!signedIn) {
+    return (
+      <Link href="/auth/login?next=/pricing">
+        <Button variant="primary" className="w-full">
+          Sign in to buy
+        </Button>
+      </Link>
+    );
+  }
 
   async function startCheckout() {
     setError(null);
 
     if (!paymentsReady) {
-      setError(
-        "Payments are not configured on this deployment yet. Add Razorpay keys to .env.local to enable checkout."
-      );
+      setError("Payments are not configured yet. Please try again later.");
       return;
     }
 
@@ -100,7 +118,7 @@ export function CheckoutButton({ planId, priceInr, paymentsReady, signedIn }: Pr
         amount: order.amountInr * 100,
         currency: order.currency,
         name: "Learnzo",
-        description: "Learnzo subscription",
+        description: "Learnzo Plus - one month",
         order_id: order.providerOrderId,
         theme: { color: "#1a4bdd" },
         handler: async (response) => {
@@ -111,16 +129,14 @@ export function CheckoutButton({ planId, priceInr, paymentsReady, signedIn }: Pr
           });
           const vj = await v.json();
           if (!v.ok) {
-            setError(vj.error ?? "Payment verification failed. Contact support if you were charged.");
+            setError(vj.error ?? "Payment verification failed. Email support@learnzo.online if you were charged.");
             return;
           }
           Analytics.track("payment_successful", { planId, amount: order.amountInr });
           router.push("/solve?upgraded=1");
           router.refresh();
         },
-        modal: {
-          ondismiss: () => setBusy(false)
-        }
+        modal: { ondismiss: () => setBusy(false) }
       });
       rzp.open();
     } catch (e) {
@@ -130,41 +146,21 @@ export function CheckoutButton({ planId, priceInr, paymentsReady, signedIn }: Pr
     }
   }
 
-  // Free plan â€” always start free
-  if (priceInr === 0) {
-    return (
-      <Link href="/solve">
-        <Button variant="outline" className="w-full">
-          Start free
-        </Button>
-      </Link>
-    );
-  }
-
-  // Not signed in â€” send to login with return to pricing
-  if (!signedIn) {
-    return (
-      <Link href="/auth/login?next=/pricing">
-        <Button
-          variant={planId === "PLUS_YEARLY" ? "primary" : "outline"}
-          className="w-full"
-        >
-          Sign in to upgrade
-        </Button>
-      </Link>
-    );
-  }
-
-  // Signed in â€” start checkout
   return (
     <div>
       <Button
         onClick={startCheckout}
         disabled={busy}
         className="w-full"
-        variant={planId === "PLUS_YEARLY" ? "primary" : "outline"}
+        variant="primary"
       >
-        {busy ? <><Spinner /> Starting...</> : "Choose plan"}
+        {busy ? (
+          <>
+            <Spinner /> Starting...
+          </>
+        ) : (
+          ctaText ?? "Buy Now"
+        )}
       </Button>
       {error && (
         <div className="mt-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-800">
