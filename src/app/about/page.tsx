@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/Badge";
 export const metadata: Metadata = {
   title: "About Learnzo",
   description:
-    "Learnzo is an AI homework helper built for Indian students. We help children understand their homework â€” not just get the answer."
+    "Learnzo is a fully online AI homework helper built for Indian students. We help children understand their homework, not just get the answer."
 };
 
 export default function AboutPage() {
@@ -19,16 +19,17 @@ export default function AboutPage() {
       <main>
 
         <section className="bg-gradient-to-b from-brand-50/70 to-white">
-          <div className="container-x py-10 lg:py-14 max-w-4xl">
+          <div className="container-x py-14 lg:py-20 max-w-4xl">
             <Badge>About Learnzo</Badge>
-            <h1 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+
+          
+
+            <h1 className="mt-8 text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
               Homework help that
               <span className="text-brand-600"> actually helps.</span>
             </h1>
             <p className="mt-6 text-lg text-slate-700 leading-relaxed max-w-2xl">
-              Learnzo is an AI learning assistant built for Indian students in
-              CBSE, ICSE and State Board schools. We help children understand
-              their homework â€” not just copy the answer.
+              Learnzo is an online learning platform designed for students across the Indian school ecosystem, including CBSE, ICSE, all State Boards, and Open Schooling boards. Its purpose is to help children understand homework rather than simply reproduce answers.
             </p>
           </div>
         </section>
@@ -43,13 +44,13 @@ export default function AboutPage() {
               since you were in school.
             </p>
             <p>
-              So you do what everyone does â€” search the question on Google.
-              You find an answer. You copy it down. Homework is done.
-              But nothing has been learnt. Tomorrow, the same problem comes back.
+              So you do what everyone does - search the question on Google. You
+              find an answer. You copy it down. Homework is done. But nothing has
+              been learnt. Tomorrow, the same problem comes back.
             </p>
             <p>
-              Learnzo exists to change that. We do not just show the answer.
-              We show the concept, the reasoning, every step, and why the answer
+              Learnzo exists to change that. We do not just show the answer. We
+              show the concept, the reasoning, every step, and why the answer
               works. And if the child still does not understand, we explain the
               same idea five different ways until one of them clicks.
             </p>
@@ -78,10 +79,9 @@ export default function AboutPage() {
                   One explanation is not enough
                 </h3>
                 <p className="mt-2 text-sm text-slate-700 leading-relaxed">
-                  The &ldquo;I Still Don&rsquo;t Understand&rdquo; button gives five
-                  fresh ways to see the same idea â€” simpler, with an example, in
-                  micro-steps, from a tiny problem, or as a question to try
-                  themselves.
+                  The "I Still Don't Understand" button gives five fresh ways to
+                  see the same idea - simpler, with an example, in micro-steps,
+                  from a tiny problem, or as a question to try themselves.
                 </p>
               </Card>
               <Card>
@@ -121,12 +121,13 @@ export default function AboutPage() {
                 <li>Mathematics</li>
                 <li>Science (Physics, Chemistry, Biology)</li>
                 <li>English (Grammar, Comprehension, Writing)</li>
+                <li>Computer Science (from basics to AI)</li>
               </ul>
             </div>
             <div>
               <div className="font-semibold text-slate-900">Classes</div>
               <ul className="mt-2 space-y-1 text-sm text-slate-700">
-                <li>Classes 6 to 12</li>
+                <li>Classes 1 to 10</li>
                 <li>Early learning resources for ages 2-6</li>
               </ul>
             </div>
@@ -159,12 +160,12 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="container-x py-10 text-center max-w-3xl">
+        <section className="container-x py-14 text-center max-w-3xl">
           <h2 className="text-2xl lg:text-3xl font-bold">
             Try it with a homework question
           </h2>
           <p className="mt-3 text-slate-600">
-            Free plan includes 5 questions per month. No credit card required.
+            Free plan includes 10 questions per month. No credit card required.
           </p>
           <div className="mt-6 flex flex-wrap gap-3 justify-center">
             <Link href="/solve">

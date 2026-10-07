@@ -20,7 +20,7 @@ const COMPARISON: Array<{
   plus: string | boolean;
 }> = [
   { label: "Monthly price",              free: "Rs. 0",      plus: "Rs. 99" },
-  { label: "Homework questions",         free: "10 / month", plus: "150 / month" },
+  { label: "Homework questions",         free: "10 / month", plus: "120 / month" },
   { label: "Type question",              free: true,         plus: true },
   { label: "Photo upload",               free: true,         plus: true },
   { label: "PDF upload",                 free: false,        plus: true },
@@ -29,31 +29,29 @@ const COMPARISON: Array<{
   { label: "Explanation modes",          free: "3",          plus: "5" },
   { label: "\"I Still Don't Understand\"", free: false,      plus: true },
   { label: "Follow-up explanations",     free: "Limited",    plus: true },
-  { label: "Practice sets",              free: "5 / month",  plus: "50 / month" },
+  { label: "Practice sets",              free: "3 / month",  plus: "30 / month" },
   { label: "Printable worksheets",       free: "1 / month",  plus: "10 / month" },
   { label: "Question history",           free: "Basic",      plus: "Full" },
-  { label: "Priority AI",                free: false,        plus: true },
   { label: "Class selection",            free: true,         plus: true },
   { label: "Board selection",            free: false,        plus: true },
   { label: "Mathematics",                free: true,         plus: true },
   { label: "Science",                    free: true,         plus: true },
   { label: "English",                    free: true,         plus: true },
-  { label: "Computer Science",           free: false,        plus: true },
-  { label: "Ads",                        free: "Standard",   plus: "No ads" }
+  { label: "Computer Science",           free: false,        plus: true }
 ];
 
 const FAQS: Array<{ q: string; a: string }> = [
   {
     q: "Is Learnzo free?",
-    a: "Yes. Learnzo offers a Free plan with 10 homework questions every month. No credit card required."
+    a: "Yes. The Free plan gives you 10 homework questions every month. No credit card required."
   },
   {
     q: "What do I get for Rs. 99?",
-    a: "Plus gives you 150 homework questions per month, PDF uploads, all 5 explanation modes, 50 practice sets, 10 printable worksheets, full history and priority AI."
+    a: "Plus gives you 120 homework questions per month, PDF uploads, all 5 explanation modes, 30 practice sets, 10 printable worksheets, full history and Computer Science support."
   },
   {
     q: "Does the Rs. 99 plan automatically renew?",
-    a: "No. The Plus plan is a one-month purchase. It does not automatically renew. You decide whether to buy it again."
+    a: "No. Plus is a one-month purchase. It does not automatically renew. You decide whether to buy it again."
   },
   {
     q: "What happens when I use all my Free questions?",
@@ -72,16 +70,16 @@ const FAQS: Array<{ q: string; a: string }> = [
     a: "Yes. Plus users get the full \"I Still Don't Understand\" flow and follow-up explanations. Free users get 3 basic explanation modes."
   },
   {
-    q: "Which classes does Learnzo support?",
-    a: "Classes 1 to 10. Your class and board selection help make explanations and practice more relevant."
-  },
-  {
-    q: "Which boards are supported?",
-    a: "You can select CBSE, ICSE, State Board or Other as your learning context. Learnzo is an independent product and is not affiliated with or endorsed by any board."
+    q: "Which classes and boards are supported?",
+    a: "Classes 1 to 10. CBSE, ICSE, all State Boards and Open Schooling boards. Learnzo is an independent product and is not affiliated with or endorsed by any board."
   },
   {
     q: "Can I pay with UPI?",
     a: "Yes. Razorpay accepts UPI, credit cards, debit cards, net banking and wallets. All payments are verified on our servers."
+  },
+  {
+    q: "Do you offer refunds?",
+    a: "Refunds are only issued for duplicate charges or extended service outages, as described in our Refund Policy."
   }
 ];
 
@@ -129,8 +127,16 @@ export default async function PricingPage() {
           </Card>
         )}
 
+        {/* Tuition comparison */}
+        <div className="mt-10 rounded-2xl border border-brand-100 bg-brand-50/60 px-5 py-4 text-center">
+          <p className="text-sm text-slate-700">
+            A private tutor charges about <strong>Rs. 100 per question</strong>.
+            Learnzo Plus charges <strong>83 paise per question</strong>.
+          </p>
+        </div>
+
         {/* PLAN CARDS */}
-        <div className="mt-12 grid md:grid-cols-2 gap-6 max-w-4xl">
+        <div className="mt-8 grid md:grid-cols-2 gap-6 max-w-4xl">
           {DEFAULT_PRICING.plans.map((plan) => (
             <Card
               key={plan.id}
@@ -156,30 +162,20 @@ export default async function PricingPage() {
               </div>
 
               <div className="mt-5">
-  {plan.price_inr === 0 ? (
-    <div className="text-4xl font-bold">Rs. 0</div>
-  ) : (
-    <>
-      <div className="flex items-baseline gap-2">
-        <span className="text-2xl font-semibold text-slate-400 line-through">
-          Rs. {plan.original_price_inr}
-        </span>
-        <span className="text-4xl font-bold text-brand-700">
-          Rs. {plan.price_inr}
-        </span>
-        <span className="text-base font-medium text-slate-500">/month</span>
-      </div>
-      {plan.limitedTimeOffer && (
-        <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-rose-50 border border-rose-200 px-3 py-1 text-xs font-bold text-rose-700 uppercase tracking-wider">
-          Limited time offer
-        </div>
-      )}
-      <div className="mt-2 text-xs font-semibold text-emerald-700">
-        No auto-renewal
-      </div>
-    </>
-  )}
-</div>
+                {plan.price_inr === 0 ? (
+                  <div className="text-4xl font-bold">Rs. 0</div>
+                ) : (
+                  <>
+                    <div className="text-4xl font-bold">
+                      Rs. {plan.price_inr}
+                      <span className="text-base font-medium text-slate-500">/month</span>
+                    </div>
+                    <div className="mt-1 text-xs font-semibold text-emerald-700">
+                      No auto-renewal
+                    </div>
+                  </>
+                )}
+              </div>
 
               <ul className="mt-6 space-y-2.5 text-sm text-slate-700 flex-1">
                 {plan.features.map((f, i) => (
@@ -264,6 +260,7 @@ export default async function PricingPage() {
                 <li>CBSE</li>
                 <li>ICSE</li>
                 <li>State Board</li>
+                <li>Open Schooling</li>
                 <li>Other</li>
               </ul>
             </Card>
@@ -273,7 +270,6 @@ export default async function PricingPage() {
                 <li>Mathematics</li>
                 <li>Science</li>
                 <li>English</li>
-                <li>Social Science</li>
                 <li>Computer Science</li>
                 <li>More</li>
               </ul>
@@ -301,6 +297,33 @@ export default async function PricingPage() {
             ))}
           </div>
         </section>
+
+        {/* HOW PAYMENTS WORK */}
+        <div className="mt-14 prose prose-slate max-w-none">
+          <h2 className="text-2xl font-bold">How payments work</h2>
+          <ul className="mt-3 list-disc list-inside text-slate-700 space-y-2">
+            <li>
+              Payments are handled by Razorpay. All payment verification happens
+              server-side. The browser never decides whether a payment succeeded.
+            </li>
+            <li>
+              Plus is a one-time purchase for one month. There is no automatic
+              renewal and no recurring subscription.
+            </li>
+            <li>
+              If you were charged but the plan did not activate, contact{" "}
+              <a href="mailto:support@learnzo.online" className="text-brand-700 underline">
+                support@learnzo.online
+              </a>{" "}
+              with your payment ID. We can always verify against Razorpay.
+            </li>
+            <li>
+              Refunds are only issued for duplicate charges or extended service
+              outages, as described in our{" "}
+              <a href="/refund-policy" className="text-brand-700 underline">Refund Policy</a>.
+            </li>
+          </ul>
+        </div>
 
         {/* FINAL CTA */}
         <section className="mt-16 rounded-3xl bg-brand-600 text-white p-8 lg:p-12 text-center">

@@ -1,12 +1,9 @@
 import { createAdminClient } from "../supabase/admin";
 
-/**
- * Centralized usage limits. Single source of truth for every plan.
- */
 export const PLAN_LIMITS = {
   FREE: {
     solves: 10,
-    practices: 5,
+    practices: 3,
     pdfs: 1,
     explanationModes: 3,
     pdfUpload: false,
@@ -14,8 +11,8 @@ export const PLAN_LIMITS = {
     priorityAI: false
   },
   PLUS_MONTHLY: {
-    solves: 150,
-    practices: 50,
+    solves: 120,
+    practices: 30,
     pdfs: 10,
     explanationModes: 5,
     pdfUpload: true,
@@ -27,7 +24,6 @@ export const PLAN_LIMITS = {
 export type PlanKey = keyof typeof PLAN_LIMITS;
 export type UsageKind = "solves" | "practices" | "pdfs";
 
-/** Return the plan key for a user based on their active subscription. */
 export async function getUserPlan(userId: string): Promise<PlanKey> {
   const db = createAdminClient();
   const { data: sub } = await db
@@ -47,10 +43,6 @@ export async function getUserPlan(userId: string): Promise<PlanKey> {
   return "PLUS_MONTHLY";
 }
 
-/**
- * Consume one unit of usage for the given feature.
- * Returns whether the action is allowed and how many remain.
- */
 export async function checkAndConsume(userId: string, kind: UsageKind) {
   const db = createAdminClient();
   const plan = await getUserPlan(userId);
@@ -96,7 +88,6 @@ export async function checkAndConsume(userId: string, kind: UsageKind) {
   };
 }
 
-/** Read usage without consuming. Used by the UsageBar API. */
 export async function getUsage(userId: string) {
   const db = createAdminClient();
   const plan = await getUserPlan(userId);

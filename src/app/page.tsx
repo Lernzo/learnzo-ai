@@ -40,12 +40,35 @@ export default function HomePage() {
       <Nav />
       <main>
 
+        
+        {/* MOTIVATION BANNER */}
+        <section className="bg-gradient-to-r from-brand-700 via-brand-600 to-brand-500 text-white">
+          <div className="container-x py-8 lg:py-10">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5 text-center md:text-left">
+              <div>
+                <p className="text-2xl lg:text-3xl font-bold leading-snug">
+                  Every child can understand.
+                </p>
+                <p className="mt-2 text-brand-50 text-sm lg:text-base">
+                  Homework doesn&rsquo;t have to end in tears. Sometimes they just need it explained differently.
+                </p>
+              </div>
+              <Link
+                href="/solve"
+                className="shrink-0 inline-flex items-center justify-center rounded-2xl bg-white text-brand-700 px-6 py-3 text-sm font-semibold hover:bg-brand-50 transition"
+              >
+                Try Free
+              </Link>
+            </div>
+          </div>
+        </section>
+                {/* TRUST STRIP */}
         <section className="bg-white border-b border-slate-100">
           <div className="container-x py-4">
-            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-2 text-sm">
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm">
               <div className="flex items-center gap-2 text-slate-700">
                 <span className="text-emerald-500">&#10003;</span>
-                <span>Built for CBSE, ICSE &amp; State Boards</span>
+                <span>Built for CBSE, ICSE, State Boards and Open Schooling Boards</span>
               </div>
               <div className="flex items-center gap-2 text-slate-700">
                 <span className="text-emerald-500">&#10003;</span>
@@ -57,7 +80,7 @@ export default function HomePage() {
               </div>
               <div className="flex items-center gap-2 text-slate-700">
                 <span className="text-emerald-500">&#10003;</span>
-                <span>100-page coloring book for ages 2-6</span>
+                <span>Free Coloring Book for Kids</span>
               </div>
             </div>
           </div>

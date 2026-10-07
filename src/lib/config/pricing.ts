@@ -4,7 +4,6 @@ export interface Plan {
   id: PlanId;
   name: string;
   price_inr: number;
-  original_price_inr?: number;
   interval: "month";
   badge?: string;
   bestFor: string;
@@ -13,7 +12,6 @@ export interface Plan {
   features: string[];
   ctaText: string;
   footnote: string;
-  limitedTimeOffer?: boolean;
   highlighted?: boolean;
 }
 
@@ -33,10 +31,10 @@ export const DEFAULT_PRICING = {
       ctaText: "Start Free",
       features: [
         "10 homework questions every month",
-        "Understand every step, not just the answer",
-        "Photo upload and typed questions",
+        "Type a question or upload a photo",
+        "Step-by-step explanations",
         "3 explanation modes",
-        "5 practice sets every month",
+        "3 practice sets every month",
         "1 printable worksheet every month",
         "Maths, Science and English",
         "No credit card required"
@@ -47,27 +45,24 @@ export const DEFAULT_PRICING = {
       id: "PLUS_MONTHLY",
       name: "Plus",
       price_inr: 99,
-      original_price_inr: 499,
       interval: "month",
-      badge: "Get Unlimited Homework @99 only",
+      badge: "UPGRADE",
       bestFor: "For everyday homework help",
       headline: "Plus",
-      subtitle: "Unlimited homework help for the whole month.",
-      ctaText: "Get Unlimited Homework @99",
+      subtitle: "Everything a school student needs, every month.",
+      ctaText: "Buy Now",
       highlighted: true,
-      limitedTimeOffer: true,
       features: [
-        "Unlimited homework questions every month",
-        "Upload homework photos and PDFs",
-        "Unlimited explanation modes",
-        "\"I Still Don't Understand\" - a completely fresh explanation",
-        "Unlimited practice sets every month",
-        "Unlimited printable worksheets every month",
-        "Unlimited questions & answers history",
-        "Priority AI - faster answers",
+        "120 homework questions every month",
+        "Upload photos and PDFs",
+        "All 5 explanation modes",
+        "\"I Still Don't Understand\" - fresh explanations",
+        "Follow-up questions on any answer",
+        "30 practice sets every month",
+        "10 printable worksheets every month",
+        "Full question history",
         "Maths, Science, English and Computer Science",
         "Class and board selection",
-        "No ads",
         "Everything in Free"
       ],
       footnote: "Rs. 99 for one month. No auto-renewal."
