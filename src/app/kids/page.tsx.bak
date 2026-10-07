@@ -5,7 +5,6 @@ import { Footer } from "@/components/marketing/Footer";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { KIDS_PDF_URL as PDF_URL } from "@/lib/config/kids-pdf";
 
 export const metadata: Metadata = {
   title: "Free 100-Page Coloring Book for Kids (Ages 2-6) - Learnzo",
@@ -13,7 +12,7 @@ export const metadata: Metadata = {
     "Download our free 100-page coloring book for children aged 2 to 6. Animals, vehicles, space, sea life, fantasy and more. Ready to print on A4. Includes a color guide on every page. No signup required."
 };
 
-
+const PDF_URL = "/kids/coloring-pages/learnzo-first-100-coloring-pages.pdf";
 
 const HIGHLIGHTS = [
   {
