@@ -14,12 +14,17 @@
     "@react-pdf/renderer": "^3.4.4",
     "@supabase/ssr": "0.5.1",
     "@supabase/supabase-js": "2.45.4",
+    "@types/pdf-parse": "^1.1.5",
     "clsx": "2.1.1",
+    "mammoth": "^1.8.0",
     "next": "14.2.13",
     "node-fetch": "^2.7.0",
+    "pdf-parse": "^2.4.5",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "react-dropzone": "^20.1.2",
     "tailwind-merge": "2.5.2",
+    "xlsx": "^0.18.5",
     "zod": "3.23.8"
   },
   "devDependencies": {

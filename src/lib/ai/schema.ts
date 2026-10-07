@@ -1,19 +1,11 @@
 import { z } from "zod";
 
-/**
- * The AI sometimes returns numbers where we expect strings
- * (e.g. answer_key: [4, 6, 7] instead of ["4", "6", "7"]).
- * This schema coerces anything string-like into a string so the
- * rest of the app can always trust .string() types.
- */
 const StringLike = z
   .union([z.string(), z.number(), z.boolean()])
   .transform((v) => String(v));
 
 export const PracticeQuestionSchema = z.object({
-  level: z
-    .enum(["easy", "medium", "challenge"])
-    .catch("easy"),
+  level: z.enum(["easy", "medium", "challenge"]).catch("easy"),
   question: StringLike,
   hint: StringLike.default(""),
   answer: StringLike,
@@ -37,5 +29,13 @@ export const AIResponseSchema = z.object({
   notes: StringLike.optional()
 });
 
+export const OCRResultSchema = z.object({
+  text: z.string().default(""),
+  confidence: z.enum(["high", "medium", "low"]).catch("high"),
+  questions: z.array(z.string()).default([]),
+  notes: z.string().optional()
+});
+
 export type AIResponse = z.infer<typeof AIResponseSchema>;
 export type PracticeQuestion = z.infer<typeof PracticeQuestionSchema>;
+export type OCRResult = z.infer<typeof OCRResultSchema>;

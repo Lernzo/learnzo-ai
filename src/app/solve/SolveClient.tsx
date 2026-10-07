@@ -1,34 +1,85 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Spinner } from "@/components/ui/Spinner";
 import { ExplainPanel } from "@/components/solve/ExplainPanel";
 import { PracticeSection } from "@/components/solve/PracticeSection";
-import { FeedbackBar } from "@/components/solve/FeedbackBar";
-import { Analytics } from "@/lib/analytics";
+import { UsageBar } from "@/components/solve/UsageBar";
 import type { AIResponse } from "@/lib/ai/schema";
 
-type Mode = "idle" | "solving" | "ready" | "error";
+type Mode = "idle" | "reading" | "solving" | "ready" | "error";
 
 export function SolveClient() {
-  const searchParams = useSearchParams();
-  const prefill = searchParams.get("q") ?? "";
-  const upgraded = searchParams.get("upgraded") === "1";
-
-  const [question, setQuestion] = useState(prefill);
+  const [question, setQuestion] = useState("");
   const [mode, setMode] = useState<Mode>("idle");
   const [response, setResponse] = useState<AIResponse | null>(null);
   const [questionId, setQuestionId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [remaining, setRemaining] = useState<number | null>(null);
+  const [fileInfo, setFileInfo] = useState<{ name: string; pages: number; questions: number } | null>(null);
 
-  useEffect(() => {
-    setQuestion(prefill);
-  }, [prefill]);
+  const onDropFile = useCallback(async (files: File[]) => {
+    const file = files[0];
+    if (!file) return;
+
+    setError(null);
+    setFileInfo(null);
+
+    if (file.size > 8 * 1024 * 1024) {
+      setError("File is too large. Please upload a file under 8 MB.");
+      return;
+    }
+
+    setMode("reading");
+
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+
+      const r = await fetch("/api/ocr/file", { method: "POST", body: fd });
+      const j = await r.json();
+
+      if (!r.ok) {
+        setError(j.error ?? "Could not read the file.");
+        setMode("idle");
+        return;
+      }
+
+      setQuestion(j.text ?? "");
+      setFileInfo({
+        name: file.name,
+        pages: j.pageCount ?? 1,
+        questions: j.questionCount ?? 1,
+      });
+      setMode("idle");
+    } catch {
+      setError("Network error while reading the file.");
+      setMode("idle");
+    }
+  }, []);
+
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+  } = useDropzone({
+    onDrop: onDropFile,
+    maxFiles: 1,
+    accept: {
+      "image/*": [".jpg", ".jpeg", ".png", ".webp"],
+      "application/pdf": [".pdf"],
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.ms-excel": [".xls"],
+      "text/plain": [".txt"],
+      "text/csv": [".csv"],
+      "text/markdown": [".md"],
+    },
+  });
 
   async function solve() {
     if (question.trim().length < 3) return;
@@ -37,40 +88,25 @@ export function SolveClient() {
     setResponse(null);
     setQuestionId(null);
 
-    Analytics.track("upload_started", { source: "text" });
-
     try {
       const r = await fetch("/api/ai/solve", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question })
+        body: JSON.stringify({ question }),
       });
       const j = await r.json();
 
       if (!r.ok) {
         if (j.code === "LIMIT_REACHED") {
-          Analytics.track("limit_reached", { feature: "solves" });
+          window.dispatchEvent(new Event("learnzo:usage-changed"));
+          setError(null);
+          setMode("idle");
+          setResponse(null);
+          return;
         }
         setError(j.error ?? "Could not solve.");
         setMode("error");
         return;
-      }
-
-      Analytics.track("question_recognized", {
-        subject: j.response?.subject,
-        topic: j.response?.topic,
-        difficulty: j.response?.difficulty
-      });
-      Analytics.track("ai_response_generated", {
-        subject: j.response?.subject,
-        has_example: Boolean(j.response?.example),
-        has_practice: Array.isArray(j.response?.practice_questions) && j.response.practice_questions.length > 0
-      });
-      if (j.usage && typeof j.usage.remaining === "number" && j.usage.remaining <= 1) {
-        Analytics.track("free_usage_consumed", {
-          feature: "solves",
-          remaining: j.usage.remaining
-        });
       }
 
       setResponse(j.response);
@@ -78,6 +114,7 @@ export function SolveClient() {
       if (j.usage && typeof j.usage.remaining === "number") {
         setRemaining(j.usage.remaining);
       }
+      window.dispatchEvent(new Event("learnzo:usage-changed"));
       setMode("ready");
     } catch {
       setError("Network error. Please try again.");
@@ -90,38 +127,79 @@ export function SolveClient() {
     setResponse(null);
     setQuestionId(null);
     setError(null);
+    setFileInfo(null);
     setMode("idle");
   }
 
   return (
     <>
-      {upgraded && (
-        <Card className="mb-6 border-emerald-200 bg-emerald-50 text-emerald-900 text-sm">
-          Your subscription is active. Thank you for supporting Learnzo.
-        </Card>
-      )}
+      <div className="mb-6">
+        <UsageBar />
+      </div>
 
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold">Let&apos;s solve this together.</h1>
           <p className="text-slate-600 mt-1">
-            Type your homework question below and click Solve &amp; Explain.
+            Type the question, or upload homework as a photo, PDF, Word, Excel or text file.
           </p>
         </div>
         {remaining !== null && (
           <span className="text-xs text-slate-500 whitespace-nowrap">
-            {remaining} free left this month
+            {remaining} left this month
           </span>
         )}
       </div>
 
       <Card className="mt-6">
+        <div
+          {...getRootProps()}
+          className={
+            "rounded-2xl border-2 border-dashed p-6 text-center cursor-pointer transition " +
+            (isDragActive
+              ? "border-brand-500 bg-brand-50"
+              : "border-slate-300 bg-white hover:border-brand-400")
+          }
+        >
+          <input {...getInputProps()} />
+          {mode === "reading" ? (
+            <div className="flex items-center justify-center gap-2 text-slate-700 text-sm">
+              <Spinner /> Reading your file...
+            </div>
+          ) : (
+            <>
+              <div className="text-4xl">&#128206;</div>
+              <div className="mt-3 font-semibold">
+                Upload homework
+              </div>
+              <div className="text-sm text-slate-600 mt-1">
+                Drop a file here, or click to choose
+              </div>
+              <div className="text-xs text-slate-500 mt-2">
+                Photo, PDF, Word (.docx), Excel (.xlsx), text, CSV. Up to 8 MB.
+              </div>
+            </>
+          )}
+        </div>
+
+        {fileInfo && (
+          <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs text-emerald-800">
+            Read <strong>{fileInfo.name}</strong>
+            {fileInfo.pages > 1 && <> ({fileInfo.pages} pages)</>}.
+            Detected <strong>{fileInfo.questions}</strong>{" "}
+            {fileInfo.questions === 1 ? "question" : "questions"}.
+            Edit the text below if needed, then click Solve.
+          </div>
+        )}
+      </Card>
+
+      <Card className="mt-4">
         <label className="text-xs font-semibold text-slate-700">YOUR QUESTION</label>
         <textarea
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          rows={4}
-          placeholder="Type or paste the homework question here..."
+          rows={6}
+          placeholder="Type or paste the homework question here, or upload a file above."
           className="mt-2 w-full rounded-2xl border border-slate-300 bg-white p-3 text-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
         />
         <div className="mt-3 flex justify-end gap-2">
@@ -132,7 +210,7 @@ export function SolveClient() {
           )}
           <Button
             onClick={solve}
-            disabled={mode === "solving" || question.trim().length < 3}
+            disabled={mode === "solving" || mode === "reading" || question.trim().length < 3}
           >
             {mode === "solving" ? (
               <>
@@ -212,8 +290,6 @@ export function SolveClient() {
             questionId={questionId}
             initial={response.practice_questions}
           />
-
-          <FeedbackBar questionId={questionId} />
         </div>
       )}
     </>
