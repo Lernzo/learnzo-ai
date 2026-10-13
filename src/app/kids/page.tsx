@@ -121,6 +121,15 @@ export default function KidsPage() {
                 A free 100-page
                 <span className="text-brand-600"> coloring book.</span>
               </h1>
+
+<div className="mt-6 flex flex-wrap gap-3">
+  <Link href="/coloring">
+    <Button size="lg">Get the free coloring book</Button>
+  </Link>
+  <Link href="/workbook">
+    <Button size="lg" variant="outline">Get the tracing workbook</Button>
+  </Link>
+</div>
               <p className="mt-6 text-lg text-slate-700 max-w-xl leading-relaxed">
                 One hundred pages of big, friendly drawings for children aged 2 to 6.
                 Animals, vehicles, space, sea life, fantasy and more. Every page

@@ -11,3 +11,9 @@ dist/
 .vercel
 next-env.d.ts
 *.tsbuildinfo
+# Secrets - never commit
+LearnzoHostingermailPW.txt
+openrouterkey.txt
+BNUPS6281H.jpg
+*.txt
+*.jpg
