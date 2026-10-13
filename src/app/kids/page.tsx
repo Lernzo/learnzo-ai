@@ -13,8 +13,6 @@ export const metadata: Metadata = {
     "Download our free 100-page coloring book for children aged 2 to 6. Animals, vehicles, space, sea life, fantasy and more. Ready to print on A4. Includes a color guide on every page. No signup required."
 };
 
-
-
 const HIGHLIGHTS = [
   {
     icon: "\uD83C\uDFA8",
@@ -111,7 +109,32 @@ export default function KidsPage() {
       <main>
 
         {/* HERO */}
-        <section className="bg-gradient-to-b from-brand-50/70 to-white">
+                {/* FREE PRINTABLES - TOP OF PAGE */}
+        <div className="pt-8 pb-4">
+          <h3 className="text-2xl font-bold text-center">Free printables for little learners</h3>
+          <p className="mt-2 text-center text-slate-600">Print at home. No signup fee. Just your name and email.</p>
+          <div className="mt-6 grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            <Link href="/coloring" className="rounded-2xl border border-slate-200 bg-white p-6 text-center hover:border-brand-400 hover:shadow-soft transition">
+              <div className="text-4xl">&#127912;</div>
+              <div className="mt-3 font-bold text-lg">Coloring Book</div>
+              <div className="mt-1 text-sm text-slate-600">100 pages of simple, friendly drawings</div>
+              <div className="mt-4 inline-block rounded-full bg-brand-600 text-white px-5 py-2 text-sm font-semibold">Download free</div>
+            </Link>
+            <Link href="/workbook" className="rounded-2xl border border-slate-200 bg-white p-6 text-center hover:border-brand-400 hover:shadow-soft transition">
+              <div className="text-4xl">&#9999;&#65039;</div>
+              <div className="mt-3 font-bold text-lg">Tracing Workbook</div>
+              <div className="mt-1 text-sm text-slate-600">Lines, letters, numbers, pencil control</div>
+              <div className="mt-4 inline-block rounded-full bg-brand-600 text-white px-5 py-2 text-sm font-semibold">Download free</div>
+            </Link>
+            <Link href="/numbers" className="rounded-2xl border border-slate-200 bg-white p-6 text-center hover:border-brand-400 hover:shadow-soft transition">
+              <div className="text-4xl">&#128290;</div>
+              <div className="mt-3 font-bold text-lg">Numbers Workbook</div>
+              <div className="mt-1 text-sm text-slate-600">Counting, more and fewer, first sums</div>
+              <div className="mt-4 inline-block rounded-full bg-brand-600 text-white px-5 py-2 text-sm font-semibold">Download free</div>
+            </Link>
+          </div>
+        </div>
+<section className="bg-gradient-to-b from-brand-50/70 to-white">
           <div className="container-x py-10 lg:py-14 grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-emerald-100 text-emerald-800 px-4 py-1.5 text-xs font-bold uppercase tracking-wider">
@@ -123,13 +146,7 @@ export default function KidsPage() {
               </h1>
 
 <div className="mt-6 flex flex-wrap gap-3">
-  <Link href="/coloring">
-    <Button size="lg">Get the free coloring book</Button>
-  </Link>
-  <Link href="/workbook">
-    <Button size="lg" variant="outline">Get the tracing workbook</Button>
-  </Link>
-</div>
+  </div>
               <p className="mt-6 text-lg text-slate-700 max-w-xl leading-relaxed">
                 One hundred pages of big, friendly drawings for children aged 2 to 6.
                 Animals, vehicles, space, sea life, fantasy and more. Every page
@@ -421,6 +438,10 @@ export default function KidsPage() {
             </div>
           </div>
         </section>
+
+      
+
+      
 
       </main>
       <Footer />
