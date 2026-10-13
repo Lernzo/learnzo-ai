@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 const Body = z.object({
   name: z.string().min(1).max(120),
   email: z.string().email().max(200),
-  source: z.enum(["tracing-workbook", "coloring-book"]).default("tracing-workbook")
+  source: z.enum(["tracing-workbook", "coloring-book", "numbers-workbook"]).default("tracing-workbook")
 });
 
 export async function POST(req: NextRequest) {
