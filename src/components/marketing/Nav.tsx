@@ -28,7 +28,7 @@ export function Nav() {
           <Link href="/about" className="hover:text-brand-600">About</Link>
           <Link href="/solve" className="hover:text-brand-600">Solve</Link>
           <Link href="/kids" className="relative inline-flex items-center gap-2 hover:text-brand-600">
-  <span>FREE Kids Activities</span>
+  <span>Kids Activities</span>
   <span className="rounded-full bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">Free</span>
 </Link>
           <Link href="/pricing" className="hover:text-brand-600">Pricing</Link>
@@ -60,7 +60,7 @@ export function Nav() {
             <Link href="/about" onClick={() => setOpen(false)}>About</Link>
             <Link href="/solve" onClick={() => setOpen(false)}>Solve</Link>
             <Link href="/kids" onClick={() => setOpen(false)} className="inline-flex items-center gap-2">
-  <span>FREE Kids Activities</span>
+  <span>Kids Activities</span>
   <span className="rounded-full bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">Free</span>
 </Link>
             <Link href="/pricing" onClick={() => setOpen(false)}>Pricing</Link>
