@@ -27,7 +27,10 @@ export function Nav() {
         <nav className="hidden lg:flex items-center gap-6 text-sm text-slate-700">
           <Link href="/about" className="hover:text-brand-600">About</Link>
           <Link href="/solve" className="hover:text-brand-600">Solve</Link>
-          <Link href="/kids" className="hover:text-brand-600">Kids</Link>
+          <Link href="/kids" className="relative inline-flex items-center gap-2 hover:text-brand-600">
+  <span>FREE Kids Activities</span>
+  <span className="rounded-full bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">Free</span>
+</Link>
           <Link href="/pricing" className="hover:text-brand-600">Pricing</Link>
           <Link href="/faq" className="hover:text-brand-600">FAQ</Link>
           <Link href="/how-it-works" className="hover:text-brand-600">How it works</Link>
@@ -56,7 +59,10 @@ export function Nav() {
           <div className="container-x py-4 flex flex-col gap-3 text-sm">
             <Link href="/about" onClick={() => setOpen(false)}>About</Link>
             <Link href="/solve" onClick={() => setOpen(false)}>Solve</Link>
-            <Link href="/kids" onClick={() => setOpen(false)}>Kids</Link>
+            <Link href="/kids" onClick={() => setOpen(false)} className="inline-flex items-center gap-2">
+  <span>FREE Kids Activities</span>
+  <span className="rounded-full bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">Free</span>
+</Link>
             <Link href="/pricing" onClick={() => setOpen(false)}>Pricing</Link>
             <Link href="/faq" onClick={() => setOpen(false)}>FAQ</Link>
             <Link href="/how-it-works" onClick={() => setOpen(false)}>How it works</Link>
