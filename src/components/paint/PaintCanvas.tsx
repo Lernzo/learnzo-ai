@@ -8,6 +8,107 @@ const COLORS = [
   "#94a3b8", "#fbbf24"
 ];
 
+type Tool = "brush" | "eraser" | "fill";
+
+function hexToRgb(hex: string) {
+  const h = hex.replace("#", "");
+  return {
+    r: parseInt(h.substring(0, 2), 16),
+    g: parseInt(h.substring(2, 4), 16),
+    b: parseInt(h.substring(4, 6), 16)
+  };
+}
+
+/**
+ * Flood-fill a connected region of the canvas starting from (startX, startY).
+ * Boundaries are pixels whose brightness is below the threshold.
+ */
+function floodFill(
+  ctx: CanvasRenderingContext2D,
+  startX: number,
+  startY: number,
+  fillHex: string
+): boolean {
+  const w = ctx.canvas.width;
+  const h = ctx.canvas.height;
+
+  if (startX < 0 || startY < 0 || startX >= w || startY >= h) return false;
+
+  const imgData = ctx.getImageData(0, 0, w, h);
+  const data = imgData.data;
+
+  const startIdx = (startY * w + startX) * 4;
+  const startR = data[startIdx];
+  const startG = data[startIdx + 1];
+  const startB = data[startIdx + 2];
+
+  // Refuse if user tapped a dark line
+  const BRIGHTNESS_MIN = 200;
+  if (startR < BRIGHTNESS_MIN && startG < BRIGHTNESS_MIN && startB < BRIGHTNESS_MIN) {
+    return false;
+  }
+
+  const target = hexToRgb(fillHex);
+
+  // Refuse if already that color
+  if (
+    Math.abs(startR - target.r) < 8 &&
+    Math.abs(startG - target.g) < 8 &&
+    Math.abs(startB - target.b) < 8
+  ) {
+    return false;
+  }
+
+  const visited = new Uint8Array(w * h);
+  const stack: number[] = [startY * w + startX];
+
+  const isFillable = (x: number, y: number) => {
+    const idx = (y * w + x) * 4;
+    return !(data[idx] < BRIGHTNESS_MIN && data[idx + 1] < BRIGHTNESS_MIN && data[idx + 2] < BRIGHTNESS_MIN);
+  };
+
+  let filled = 0;
+  const MAX = w * h;
+  while (stack.length > 0 && filled < MAX) {
+    const p = stack.pop()!;
+    if (visited[p]) continue;
+    visited[p] = 1;
+
+    const x = p % w;
+    const y = (p - x) / w;
+
+    const idx = p * 4;
+    data[idx] = target.r;
+    data[idx + 1] = target.g;
+    data[idx + 2] = target.b;
+    data[idx + 3] = 255;
+    filled++;
+
+    if (x > 0) {
+      const np = p - 1;
+      if (!visited[np] && isFillable(x - 1, y)) stack.push(np);
+    }
+    if (x < w - 1) {
+      const np = p + 1;
+      if (!visited[np] && isFillable(x + 1, y)) stack.push(np);
+    }
+    if (y > 0) {
+      const np = p - w;
+      if (!visited[np] && isFillable(x, y - 1)) stack.push(np);
+    }
+    if (y < h - 1) {
+      const np = p + w;
+      if (!visited[np] && isFillable(x, y + 1)) stack.push(np);
+    }
+  }
+
+  if (filled > 0) {
+    ctx.putImageData(imgData, 0, 0);
+    return true;
+  }
+  return false;
+}
+
 interface Props {
   page: number;
 }
@@ -19,8 +120,8 @@ export function PaintCanvas({ page }: Props) {
   const lastPosRef = useRef({ x: 0, y: 0 });
   const snapshotsRef = useRef<string[]>([]);
   const [color, setColor] = useState("#ef4444");
-  const [size, setSize] = useState(16);
-  const [tool, setTool] = useState<"brush" | "eraser">("brush");
+  const [size, setSize] = useState(24);
+  const [tool, setTool] = useState<Tool>("fill");
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -71,7 +172,7 @@ export function PaintCanvas({ page }: Props) {
           canvas.width = img.width;
           canvas.height = img.height;
 
-          const ctx = canvas.getContext("2d");
+          const ctx = canvas.getContext("2d", { willReadFrequently: true });
           if (!ctx) return;
           ctx.fillStyle = "#ffffff";
           ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -105,14 +206,32 @@ export function PaintCanvas({ page }: Props) {
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
     return {
-      x: (clientX - rect.left) * scaleX,
-      y: (clientY - rect.top) * scaleY
+      x: Math.round((clientX - rect.left) * scaleX),
+      y: Math.round((clientY - rect.top) * scaleY)
     };
+  };
+
+  const pushSnapshot = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    snapshotsRef.current.push(canvas.toDataURL("image/png"));
+    if (snapshotsRef.current.length > 25) snapshotsRef.current.shift();
   };
 
   const startDraw = (e: React.PointerEvent<HTMLCanvasElement>) => {
     if (status !== "ready") return;
     e.preventDefault();
+
+    // FILL: single tap does the whole work
+    if (tool === "fill") {
+      const canvas = canvasRef.current!;
+      const ctx = canvas.getContext("2d", { willReadFrequently: true })!;
+      const pos = getPos(e.clientX, e.clientY);
+      const ok = floodFill(ctx, pos.x, pos.y, color);
+      if (ok) pushSnapshot();
+      return;
+    }
+
     try { canvasRef.current?.setPointerCapture(e.pointerId); } catch {}
     drawingRef.current = true;
     lastPosRef.current = getPos(e.clientX, e.clientY);
@@ -120,6 +239,7 @@ export function PaintCanvas({ page }: Props) {
 
   const draw = (e: React.PointerEvent<HTMLCanvasElement>) => {
     if (!drawingRef.current) return;
+    if (tool === "fill") return;
     e.preventDefault();
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
@@ -142,10 +262,7 @@ export function PaintCanvas({ page }: Props) {
   const endDraw = () => {
     if (!drawingRef.current) return;
     drawingRef.current = false;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    snapshotsRef.current.push(canvas.toDataURL("image/png"));
-    if (snapshotsRef.current.length > 25) snapshotsRef.current.shift();
+    pushSnapshot();
   };
 
   const undo = () => {
@@ -184,6 +301,12 @@ export function PaintCanvas({ page }: Props) {
     a.click();
   };
 
+  const buttonClass = (active: boolean) =>
+    "rounded-xl px-3 py-1.5 text-sm font-semibold border " +
+    (active
+      ? "bg-brand-600 text-white border-brand-600"
+      : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50");
+
   return (
     <div className="w-full">
       <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-soft">
@@ -194,12 +317,10 @@ export function PaintCanvas({ page }: Props) {
               <button
                 key={c}
                 type="button"
-                onClick={() => { setColor(c); setTool("brush"); }}
+                onClick={() => setColor(c)}
                 className={
                   "h-8 w-8 rounded-full border-2 transition " +
-                  (color === c && tool === "brush"
-                    ? "border-brand-600 scale-110"
-                    : "border-slate-300")
+                  (color === c ? "border-brand-600 scale-110" : "border-slate-300")
                 }
                 style={{ backgroundColor: c }}
                 aria-label={"Color " + c}
@@ -212,7 +333,7 @@ export function PaintCanvas({ page }: Props) {
             <input
               type="color"
               value={color}
-              onChange={(e) => { setColor(e.target.value); setTool("brush"); }}
+              onChange={(e) => setColor(e.target.value)}
               className="h-8 w-10 cursor-pointer rounded border border-slate-300"
             />
           </label>
@@ -221,50 +342,48 @@ export function PaintCanvas({ page }: Props) {
             Size
             <input
               type="range"
-              min={4}
-              max={48}
+              min={6}
+              max={64}
               value={size}
               onChange={(e) => setSize(parseInt(e.target.value, 10))}
-              className="w-32"
+              className="w-28"
             />
           </label>
 
           <div className="flex items-center gap-2">
             <button
               type="button"
+              onClick={() => setTool("fill")}
+              className={buttonClass(tool === "fill")}
+              title="Tap inside a shape to fill it"
+            >
+              Fill
+            </button>
+            <button
+              type="button"
               onClick={() => setTool("brush")}
-              className={
-                "rounded-xl px-3 py-1.5 text-sm font-semibold border " +
-                (tool === "brush"
-                  ? "bg-brand-600 text-white border-brand-600"
-                  : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50")
-              }
+              className={buttonClass(tool === "brush")}
             >
               Brush
             </button>
             <button
               type="button"
               onClick={() => setTool("eraser")}
-              className={
-                "rounded-xl px-3 py-1.5 text-sm font-semibold border " +
-                (tool === "eraser"
-                  ? "bg-brand-600 text-white border-brand-600"
-                  : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50")
-              }
+              className={buttonClass(tool === "eraser")}
             >
               Eraser
             </button>
             <button
               type="button"
               onClick={undo}
-              className="rounded-xl px-3 py-1.5 text-sm font-semibold border bg-white text-slate-700 border-slate-300 hover:bg-slate-50"
+              className={buttonClass(false)}
             >
               Undo
             </button>
             <button
               type="button"
               onClick={clearAll}
-              className="rounded-xl px-3 py-1.5 text-sm font-semibold border bg-white text-slate-700 border-slate-300 hover:bg-slate-50"
+              className={buttonClass(false)}
             >
               Clear
             </button>
@@ -277,6 +396,11 @@ export function PaintCanvas({ page }: Props) {
             </button>
           </div>
         </div>
+
+        <p className="mt-3 text-xs text-slate-500">
+          <strong>Fill</strong>: tap inside any shape to fill it with the selected color.
+          <strong className="ml-3">Brush</strong>: draw with your finger or mouse.
+        </p>
       </div>
 
       <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-soft">
@@ -299,7 +423,7 @@ export function PaintCanvas({ page }: Props) {
           onPointerLeave={endDraw}
           className={
             "mx-auto block max-w-full touch-none select-none " +
-            (status === "ready" ? "cursor-crosshair" : "")
+            (status === "ready" ? (tool === "fill" ? "cursor-cell" : "cursor-crosshair") : "")
           }
           style={{
             boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
@@ -310,7 +434,7 @@ export function PaintCanvas({ page }: Props) {
       </div>
 
       <p className="mt-3 text-xs text-slate-500 text-center">
-        Tip: on a tablet, use your finger or a stylus. Save the finished page as a PNG.
+        Tip for kids: keep Fill selected. Tap once inside each shape.
       </p>
     </div>
   );
