@@ -120,6 +120,12 @@ export default function KidsPage() {
               <div className="mt-1 text-sm text-slate-600">100 pages of simple, friendly drawings</div>
               <div className="mt-4 inline-block rounded-full bg-brand-600 text-white px-5 py-2 text-sm font-semibold">Download free</div>
             </Link>
+<Link href="/paint" className="rounded-2xl border border-slate-200 bg-white p-6 text-center hover:border-brand-400 hover:shadow-soft transition">
+  <div className="text-4xl">&#127912;</div>
+  <div className="mt-3 font-bold text-lg">Color Online</div>
+  <div className="mt-1 text-sm text-slate-600">Pick any page and color it right in your browser</div>
+  <div className="mt-4 inline-block rounded-full bg-brand-600 text-white px-5 py-2 text-sm font-semibold">Start coloring</div>
+</Link>
             <Link href="/workbook" className="rounded-2xl border border-slate-200 bg-white p-6 text-center hover:border-brand-400 hover:shadow-soft transition">
               <div className="text-4xl">&#9999;&#65039;</div>
               <div className="mt-3 font-bold text-lg">Tracing Workbook</div>
