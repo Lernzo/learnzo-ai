@@ -138,6 +138,12 @@ export default function KidsPage() {
               <div className="mt-1 text-sm text-slate-600">Counting, more and fewer, first sums</div>
               <div className="mt-4 inline-block rounded-full bg-brand-600 text-white px-5 py-2 text-sm font-semibold">Download free</div>
             </Link>
+            <Link href="/alphabet" className="rounded-2xl border border-slate-200 bg-white p-6 text-center hover:border-brand-400 hover:shadow-soft transition">
+              <div className="text-4xl">&#128218;</div>
+              <div className="mt-3 font-bold text-lg">Alphabet Workbook</div>
+              <div className="mt-1 text-sm text-slate-600">Letters, sounds, first words</div>
+              <div className="mt-4 inline-block rounded-full bg-brand-600 text-white px-5 py-2 text-sm font-semibold">Download free</div>
+            </Link>
           </div>
         </div>
 <section className="bg-gradient-to-b from-brand-50/70 to-white">
