@@ -9,6 +9,8 @@ import { PatternRepeat } from "./PatternRepeat";
 import { ColorTap } from "./ColorTap";
 import { BubbleWrap } from "./BubbleWrap";
 import { TapTheLetter } from "./TapTheLetter";
+import { AnimalCount } from "./AnimalCount";
+import { TapTheNumber } from "./TapTheNumber";
 
 export interface GameMeta {
   slug: string;
@@ -29,6 +31,8 @@ export const GAMES: GameMeta[] = [
   { slug: "color-tap", title: "Color Tap", emoji: "\uD83C\uDFA8", blurb: "Tap the balloon with the right color", Component: ColorTap },
   { slug: "bubble-wrap", title: "Bubble Wrap", emoji: "\uD83E\uDEE7", blurb: "Pop every bubble. It feels great.", Component: BubbleWrap },
   { slug: "tap-the-letter", title: "Tap the Letter", emoji: "\uD83D\uDD24", blurb: "Find the letter that is asked", Component: TapTheLetter }
+  ,{ slug: "animal-count", title: "Animal Count", emoji: "\uD83D\uDC3E", blurb: "Count the animals and pick the number", Component: AnimalCount }
+  ,{ slug: "tap-the-number", title: "Tap the Number", emoji: "\uD83D\uDD22", blurb: "Find the number that is asked", Component: TapTheNumber }
 ];
 
 export function getGame(slug: string): GameMeta | undefined {

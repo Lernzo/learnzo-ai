@@ -113,6 +113,47 @@ export default function KidsPage() {
         <div className="pt-8 pb-4">
           <h3 className="text-2xl font-bold text-center">Free printables for little learners</h3>
           <p className="mt-2 text-center text-slate-600">Print at home. No signup fee. Just your name and email.</p>
+
+          <div className="mt-10 max-w-3xl mx-auto rounded-2xl border border-brand-100 bg-brand-50/50 p-6">
+            <p className="text-base font-semibold text-slate-900 text-center">
+              What you get
+            </p>
+            <p className="mt-2 text-sm text-slate-700 text-center leading-relaxed">
+              Four 100-page printable workbooks, one online coloring tool, and twelve
+              free games. All free. All for ages 2 to 6.
+            </p>
+
+            <div className="mt-5 grid sm:grid-cols-2 gap-3 text-sm">
+              <div className="flex gap-2">
+                <span className="text-brand-600 font-bold">&#10003;</span>
+                <span><strong>Coloring Book</strong> &mdash; 100 printable pages</span>
+              </div>
+              <div className="flex gap-2">
+                <span className="text-brand-600 font-bold">&#10003;</span>
+                <span><strong>Color Online</strong> &mdash; paint in the browser</span>
+              </div>
+              <div className="flex gap-2">
+                <span className="text-brand-600 font-bold">&#10003;</span>
+                <span><strong>Tracing Workbook</strong> &mdash; lines, letters, numbers</span>
+              </div>
+              <div className="flex gap-2">
+                <span className="text-brand-600 font-bold">&#10003;</span>
+                <span><strong>Numbers Workbook</strong> &mdash; counting and first sums</span>
+              </div>
+              <div className="flex gap-2">
+                <span className="text-brand-600 font-bold">&#10003;</span>
+                <span><strong>Alphabet Workbook</strong> &mdash; letters and phonics</span>
+              </div>
+              <div className="flex gap-2">
+                <span className="text-brand-600 font-bold">&#10003;</span>
+                <span><strong>Free Games</strong> &mdash; 12 tap-and-play games</span>
+              </div>
+            </div>
+
+            <p className="mt-5 text-xs text-slate-500 text-center">
+              Just your name and email. No password. No signup fee.
+            </p>
+          </div>
           <div className="mt-6 grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
             <Link href="/coloring" className="rounded-2xl border border-slate-200 bg-white p-6 text-center hover:border-brand-400 hover:shadow-soft transition">
               <div className="text-4xl">&#127912;</div>
@@ -144,6 +185,12 @@ export default function KidsPage() {
               <div className="mt-1 text-sm text-slate-600">Letters, sounds, first words</div>
               <div className="mt-4 inline-block rounded-full bg-brand-600 text-white px-5 py-2 text-sm font-semibold">Download free</div>
             </Link>
+<Link href="/games" className="rounded-2xl border border-slate-200 bg-white p-6 text-center hover:border-brand-400 hover:shadow-soft transition">
+  <div className="text-4xl">&#127918;</div>
+  <div className="mt-3 font-bold text-lg">Free Games</div>
+  <div className="mt-1 text-sm text-slate-600">Ten simple games for ages 2 to 6</div>
+  <div className="mt-4 inline-block rounded-full bg-brand-600 text-white px-5 py-2 text-sm font-semibold">Play free</div>
+</Link>
           </div>
         </div>
 <section className="bg-gradient-to-b from-brand-50/70 to-white">

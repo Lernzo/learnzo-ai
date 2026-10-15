@@ -7,6 +7,7 @@ import { Footer } from "@/components/marketing/Footer";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
+import { PdfPreviewStrip } from "@/components/kids/PdfPreviewStrip";
 
 const DOWNLOAD_URL = "/kids/downloads/learnzo-tracing-workbook.pdf";
 
@@ -94,6 +95,15 @@ export default function WorkbookPage() {
           </div>
         </section>
 
+                <section className="container-x py-14 lg:py-16">
+          <h2 className="text-3xl lg:text-4xl font-bold text-center">
+            Preview the pages
+          </h2>
+          <p className="mt-3 text-center text-slate-600 mb-8">
+            See the actual pages before you download.
+          </p>
+          <PdfPreviewStrip url="/kids/downloads/learnzo-tracing-workbook.pdf" />
+        </section>
         <section className="bg-white border-y border-slate-100">
           <div className="container-x py-14 lg:py-16 max-w-2xl">
             {!done ? (
