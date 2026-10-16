@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { PdfPreviewStrip } from "@/components/kids/PdfPreviewStrip";
+import { WorkbookForm } from "@/components/kids/WorkbookForm";
 
 const DOWNLOAD_URL = "/kids/downloads/learnzo-numbers-workbook.pdf";
 
@@ -106,98 +107,7 @@ export default function NumbersPage() {
         </section>
         <section className="bg-white border-y border-slate-100">
           <div className="container-x py-14 lg:py-16 max-w-2xl">
-            {!done ? (
-              <>
-                <h2 className="text-3xl lg:text-4xl font-bold text-center">
-                  Get the workbook
-                </h2>
-                <p className="mt-3 text-center text-slate-600">
-                  Enter your name and email. The download link appears immediately.
-                </p>
-
-                <form onSubmit={submit} className="mt-8 space-y-4">
-                  <div>
-                    <label className="text-xs font-semibold text-slate-700">
-                      NAME
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Parent name"
-                      maxLength={120}
-                      className="mt-1 w-full rounded-2xl border border-slate-300 bg-white px-4 py-2.5 text-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-xs font-semibold text-slate-700">
-                      EMAIL
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="you@example.com"
-                      className="mt-1 w-full rounded-2xl border border-slate-300 bg-white px-4 py-2.5 text-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
-                    />
-                  </div>
-
-                  {error && (
-                    <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
-                      {error}
-                    </div>
-                  )}
-
-                  <Button type="submit" size="lg" className="w-full" disabled={busy}>
-                    {busy ? "Preparing your download..." : "Download the workbook"}
-                  </Button>
-
-                  <p className="text-xs text-slate-500 text-center">
-                    We will only use your email to send occasional learning resources.
-                    No spam. Unsubscribe anytime.
-                  </p>
-                </form>
-              </>
-            ) : (
-              <div className="text-center">
-                <div className="text-5xl">&#128290;</div>
-                <h2 className="mt-4 text-3xl font-bold">
-                  Your workbook is ready
-                </h2>
-                <p className="mt-3 text-slate-600">
-                  Click the button below to download the 100-page PDF.
-                </p>
-
-                <a
-                  href={DOWNLOAD_URL}
-                  download
-                  className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-600 text-white px-8 py-4 text-base font-semibold hover:bg-brand-700 transition shadow-soft"
-                >
-                  &#11015; Download the workbook (PDF)
-                </a>
-
-                <div className="mt-8 pt-6 border-t border-slate-200">
-                  <p className="text-sm text-slate-500">
-                    Also try our other free workbooks:
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-2 justify-center">
-                    <Link href="/workbook">
-                      <button className="rounded-2xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium hover:bg-slate-50">
-                        Tracing &amp; Pre-Writing
-                      </button>
-                    </Link>
-                    <Link href="/coloring">
-                      <button className="rounded-2xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium hover:bg-slate-50">
-                        Coloring Book
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            )}
+            <WorkbookForm source="numbers-workbook" />
           </div>
         </section>
 
