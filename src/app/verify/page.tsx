@@ -75,11 +75,12 @@ export default async function VerifyPage({
   return (
     <>
       <Nav />
-      <main className="container-x py-16 lg:py-24 max-w-2xl">
-        <div className="rounded-3xl bg-white shadow-soft border border-slate-100 p-8 lg:p-12 text-center">
+      <main className="container-x py-12 lg:py-16 max-w-3xl">
 
-          {state === "ok" && dl && (
-            <>
+        {state === "ok" && dl && (
+          <>
+            {/* Main card */}
+            <div className="rounded-3xl bg-white shadow-soft border border-slate-100 p-8 lg:p-12 text-center">
               <div className="text-6xl">&#10004;&#65039;</div>
               <h1 className="mt-6 text-3xl lg:text-4xl font-bold">
                 Email confirmed
@@ -99,81 +100,137 @@ export default async function VerifyPage({
                 >
                   &#11015; Download the workbook (PDF)
                 </a>
-              </div>
 
-              <div className="mt-8 pt-6 border-t border-slate-200">
-                <p className="text-sm text-slate-500">Also try our other free workbooks:</p>
-                <div className="mt-3 flex flex-wrap gap-2 justify-center">
-                  <Link href="/workbook" className="rounded-2xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium hover:bg-slate-50">
-                    Tracing &amp; Pre-Writing
-                  </Link>
-                  <Link href="/numbers" className="rounded-2xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium hover:bg-slate-50">
-                    Numbers &amp; Counting
-                  </Link>
-                  <Link href="/alphabet" className="rounded-2xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium hover:bg-slate-50">
-                    Alphabet &amp; Phonics
-                  </Link>
-                  <Link href="/coloring" className="rounded-2xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium hover:bg-slate-50">
-                    Coloring Book
-                  </Link>
-                </div>
+                <p className="mt-3 text-xs text-slate-500">
+                  A4 printable. Print one page at a time.
+                </p>
               </div>
-            </>
-          )}
+            </div>
 
-          {state === "ok" && !dl && (
-            <>
-              <div className="text-6xl">&#10004;&#65039;</div>
-              <h1 className="mt-6 text-3xl lg:text-4xl font-bold">
-                Email confirmed
-              </h1>
-              <p className="mt-3 text-slate-600">
-                Thank you{name ? ", " + name : ""}. Your email is verified.
+            {/* What next */}
+            <div className="mt-10">
+              <h2 className="text-2xl lg:text-3xl font-bold text-center">
+                While you are here
+              </h2>
+              <p className="mt-2 text-center text-slate-600 text-sm">
+                More free things your child will enjoy.
               </p>
-              <div className="mt-8 flex flex-wrap gap-3 justify-center">
-                <Link href="/kids" className="rounded-2xl bg-brand-600 text-white px-6 py-3 font-semibold hover:bg-brand-700">
-                  Free printables
-                </Link>
-                <Link href="/games" className="rounded-2xl border border-slate-300 bg-white px-6 py-3 font-semibold hover:bg-slate-50">
-                  Play games
-                </Link>
-              </div>
-            </>
-          )}
 
-          {state === "expired" && (
-            <>
-              <div className="text-6xl">&#8987;</div>
-              <h1 className="mt-6 text-3xl lg:text-4xl font-bold">Link expired</h1>
-              <p className="mt-4 text-slate-600">
-                This verification link is more than 24 hours old. Please request a fresh one
-                by filling the form again, or write to support@learnzo.online.
-              </p>
-              <div className="mt-8">
-                <Link href="/kids" className="rounded-2xl bg-brand-600 text-white px-6 py-3 font-semibold hover:bg-brand-700">
-                  Back to printables
-                </Link>
-              </div>
-            </>
-          )}
+              <div className="mt-6 grid sm:grid-cols-2 gap-4">
 
-          {(state === "invalid" || state === "missing") && (
-            <>
-              <div className="text-6xl">&#10060;</div>
-              <h1 className="mt-6 text-3xl lg:text-4xl font-bold">Link not valid</h1>
-              <p className="mt-4 text-slate-600">
-                We could not find this verification link. It may have been typed
-                incorrectly, or already used.
-              </p>
-              <div className="mt-8">
-                <Link href="/kids" className="rounded-2xl bg-brand-600 text-white px-6 py-3 font-semibold hover:bg-brand-700">
-                  Back to printables
+                <Link
+                  href="/games"
+                  className="rounded-2xl border border-slate-200 bg-white p-6 hover:border-brand-400 hover:shadow-soft transition"
+                >
+                  <div className="text-4xl">&#127918;</div>
+                  <div className="mt-3 font-bold text-lg">Free Games</div>
+                  <div className="mt-1 text-sm text-slate-600">
+                    12 simple tap-and-play games. Ages 2 to 6.
+                  </div>
+                  <div className="mt-4 inline-block rounded-full bg-brand-600 text-white px-5 py-2 text-sm font-semibold">
+                    Play free
+                  </div>
                 </Link>
-              </div>
-            </>
-          )}
 
-        </div>
+                <Link
+                  href="/paint"
+                  className="rounded-2xl border border-slate-200 bg-white p-6 hover:border-brand-400 hover:shadow-soft transition"
+                >
+                  <div className="text-4xl">&#127912;</div>
+                  <div className="mt-3 font-bold text-lg">Color Online</div>
+                  <div className="mt-1 text-sm text-slate-600">
+                    No printer? Color 100 pages right in the browser.
+                  </div>
+                  <div className="mt-4 inline-block rounded-full bg-brand-600 text-white px-5 py-2 text-sm font-semibold">
+                    Start coloring
+                  </div>
+                </Link>
+
+                <Link
+                  href="/kids"
+                  className="rounded-2xl border border-slate-200 bg-white p-6 hover:border-brand-400 hover:shadow-soft transition"
+                >
+                  <div className="text-4xl">&#128218;</div>
+                  <div className="mt-3 font-bold text-lg">More Workbooks</div>
+                  <div className="mt-1 text-sm text-slate-600">
+                    Coloring, tracing, numbers, alphabet. All free.
+                  </div>
+                  <div className="mt-4 inline-block rounded-full bg-brand-600 text-white px-5 py-2 text-sm font-semibold">
+                    Browse
+                  </div>
+                </Link>
+
+                <Link
+                  href="/solve"
+                  className="rounded-2xl border border-slate-200 bg-white p-6 hover:border-brand-400 hover:shadow-soft transition"
+                >
+                  <div className="text-4xl">&#129504;</div>
+                  <div className="mt-3 font-bold text-lg">Homework Help</div>
+                  <div className="mt-1 text-sm text-slate-600">
+                    For older children in Classes 1 to 10. Math, Science, English, CS.
+                  </div>
+                  <div className="mt-4 inline-block rounded-full bg-brand-600 text-white px-5 py-2 text-sm font-semibold">
+                    Try free
+                  </div>
+                </Link>
+
+              </div>
+            </div>
+          </>
+        )}
+
+        {state === "ok" && !dl && (
+          <div className="rounded-3xl bg-white shadow-soft border border-slate-100 p-8 lg:p-12 text-center">
+            <div className="text-6xl">&#10004;&#65039;</div>
+            <h1 className="mt-6 text-3xl lg:text-4xl font-bold">
+              Email confirmed
+            </h1>
+            <p className="mt-3 text-slate-600">
+              Thank you{name ? ", " + name : ""}. Your email is verified.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3 justify-center">
+              <Link href="/kids" className="rounded-2xl bg-brand-600 text-white px-6 py-3 font-semibold hover:bg-brand-700">
+                Free printables
+              </Link>
+              <Link href="/games" className="rounded-2xl border border-slate-300 bg-white px-6 py-3 font-semibold hover:bg-slate-50">
+                Play games
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {state === "expired" && (
+          <div className="rounded-3xl bg-white shadow-soft border border-slate-100 p-8 lg:p-12 text-center">
+            <div className="text-6xl">&#8987;</div>
+            <h1 className="mt-6 text-3xl lg:text-4xl font-bold">Link expired</h1>
+            <p className="mt-4 text-slate-600">
+              This verification link is more than 24 hours old. Please request a fresh one
+              by filling the form again, or write to support@learnzo.online.
+            </p>
+            <div className="mt-8">
+              <Link href="/kids" className="rounded-2xl bg-brand-600 text-white px-6 py-3 font-semibold hover:bg-brand-700">
+                Back to printables
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {(state === "invalid" || state === "missing") && (
+          <div className="rounded-3xl bg-white shadow-soft border border-slate-100 p-8 lg:p-12 text-center">
+            <div className="text-6xl">&#10060;</div>
+            <h1 className="mt-6 text-3xl lg:text-4xl font-bold">Link not valid</h1>
+            <p className="mt-4 text-slate-600">
+              We could not find this verification link. It may have been typed
+              incorrectly, or already used.
+            </p>
+            <div className="mt-8">
+              <Link href="/kids" className="rounded-2xl bg-brand-600 text-white px-6 py-3 font-semibold hover:bg-brand-700">
+                Back to printables
+              </Link>
+            </div>
+          </div>
+        )}
+
       </main>
       <Footer />
     </>
