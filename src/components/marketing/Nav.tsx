@@ -31,7 +31,6 @@ export function Nav() {
   <span>Kids Activities</span>
   <span className="rounded-full bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">Free</span>
 </Link>
-          <Link href="/tools" className="hover:text-brand-600">Tools</Link>
           <Link href="/pricing" className="hover:text-brand-600">Pricing</Link>
           <Link href="/faq" className="hover:text-brand-600">FAQ</Link>
           <Link href="/how-it-works" className="hover:text-brand-600">How it works</Link>
