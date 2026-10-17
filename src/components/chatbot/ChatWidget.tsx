@@ -1,127 +1,131 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { Spinner } from "@/components/ui/Spinner";
+import { useState } from "react";
 
-interface Message {
-  role: "user" | "model";
-  content: string;
-}
-
-const SUGGESTED = [
-  "What is Learnzo?",
+const SUGGESTIONS = [
   "How much does it cost?",
-  "How do I solve a question?",
-  "What subjects do you support?"
+  "What are the free printables?",
+  "Tell me about the Plus plan",
+  "How do I play the games?"
 ];
 
 export function ChatWidget() {
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    { role: "model", content: "Hi! I am the Learnzo assistant. Ask me anything about Learnzo." }
+  const [message, setMessage] = useState("");
+  const [history, setHistory] = useState<{ role: "user" | "bot"; text: string }[]>([
+    { role: "bot", text: "Hi! I am the Learnzo assistant. Ask me anything about Learnzo." }
   ]);
-  const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, busy]);
+  async function handleSend(textToSend: string) {
+    if (!textToSend.trim() || busy) return;
 
-  async function send(text?: string) {
-    const message = (text ?? input).trim();
-    if (!message || busy) return;
+    const userMsg = textToSend.trim();
+    setMessage("");
     setError(null);
-    setInput("");
-    const newHistory = [...messages, { role: "user" as const, content: message }];
-    setMessages(newHistory);
+    setHistory((h) => [...h, { role: "user", text: userMsg }]);
     setBusy(true);
+
     try {
       const r = await fetch("/api/chatbot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ history: messages, message })
+        body: JSON.stringify({ message: userMsg })
       });
       const j = await r.json();
-      if (!r.ok) { setError(j.error ?? "Could not reply."); return; }
-      setMessages([...newHistory, { role: "model", content: j.reply }]);
+
+      if (!r.ok) {
+        setError(j.error ?? "Could not get a response.");
+      } else {
+        setHistory((h) => [...h, { role: "bot", text: j.reply }]);
+      }
     } catch {
-      setError("Network error.");
+      setError("Network error. Please try again.");
     } finally {
       setBusy(false);
     }
   }
 
   return (
-    <>
-      <button
-        aria-label="Open chat"
-        onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-5 right-5 z-50 rounded-full bg-brand-600 text-white shadow-lg hover:bg-brand-700 transition flex items-center justify-center"
-        style={{ width: 56, height: 56 }}
-      >
-        {open ? <span className="text-2xl leading-none">&times;</span> : (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
-              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        )}
-      </button>
-
-      {open && (
-        <div className="fixed bottom-24 right-5 z-50 w-[min(380px,calc(100vw-2.5rem))] rounded-2xl bg-white shadow-2xl border border-slate-200 flex flex-col overflow-hidden"
-          style={{ maxHeight: "min(560px, calc(100vh - 8rem))" }}>
-          <div className="bg-brand-600 text-white px-4 py-3 shrink-0">
-            <div className="font-semibold text-sm">Learnzo Assistant</div>
-            <div className="text-xs text-brand-100">Ask about features, pricing or how to use Learnzo</div>
+    <div className="fixed bottom-6 right-6 z-50">
+      {open ? (
+        <div className="w-80 sm:w-96 h-[500px] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden">
+          {/* Header */}
+          <div className="bg-brand-600 text-white p-4 flex items-center justify-between shrink-0">
+            <div>
+              <div className="font-bold">Learnzo Assistant</div>
+              <div className="text-xs text-brand-100">Ask about features, pricing or how to use Learnzo</div>
+            </div>
+            <button onClick={() => setOpen(false)} className="text-white hover:text-brand-100 p-2 text-xl leading-none">
+              &times;
+            </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
-            {messages.map((m, i) => (
-              <div key={i} className={m.role === "user" ? "flex justify-end" : "flex justify-start"}>
-                <div className={"max-w-[85%] rounded-2xl px-3 py-2 text-sm leading-relaxed " + (m.role === "user" ? "bg-brand-600 text-white" : "bg-slate-100 text-slate-800")}>
-                  {m.content}
+          {/* Chat Area */}
+          <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50">
+            {history.map((msg, i) => (
+              <div key={i} className={msg.role === "user" ? "text-right" : "text-left"}>
+                <div className={`inline-block p-3 rounded-2xl text-sm max-w-[85%] ${
+                  msg.role === "user" ? "bg-brand-600 text-white rounded-br-none" : "bg-white border border-slate-200 text-slate-800 rounded-bl-none shadow-sm"
+                }`}>
+                  {msg.text}
                 </div>
               </div>
             ))}
-            {busy && (
-              <div className="flex justify-start">
-                <div className="bg-slate-100 rounded-2xl px-3 py-2 flex items-center gap-2 text-sm text-slate-600">
-                  <Spinner className="h-4 w-4" /> Thinking...
+            {busy && <div className="text-left text-xs text-slate-500">Typing...</div>}
+            {error && <div className="text-center text-xs text-rose-600 bg-rose-50 p-2 rounded-lg">{error}</div>}
+
+            {/* Quick Suggestions (Only show if no messages yet) */}
+            {history.length === 1 && !busy && (
+              <div className="mt-6">
+                <div className="text-xs font-semibold text-slate-500 mb-2">Suggested questions:</div>
+                <div className="flex flex-col gap-2">
+                  {SUGGESTIONS.map((s, i) => (
+                    <button
+                      key={i}
+                      onClick={() => handleSend(s)}
+                      className="text-left text-sm bg-white border border-brand-200 text-brand-700 px-3 py-2 rounded-xl hover:bg-brand-50 transition"
+                    >
+                      {s}
+                    </button>
+                  ))}
                 </div>
               </div>
             )}
-            {error && <div className="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-800">{error}</div>}
-            {messages.length === 1 && !busy && (
-              <div className="pt-2 space-y-2">
-                {SUGGESTED.map((q, i) => (
-                  <button key={i} onClick={() => send(q)} className="block w-full text-left rounded-xl border border-slate-200 px-3 py-2 text-xs text-slate-700 hover:border-brand-400 hover:bg-brand-50 transition">
-                    {q}
-                  </button>
-                ))}
-              </div>
-            )}
-            <div ref={bottomRef} />
           </div>
 
-          <div className="border-t border-slate-200 p-3 shrink-0">
-            <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex gap-2">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask a question..."
-                disabled={busy}
-                maxLength={1000}
-                className="flex-1 rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100 disabled:opacity-60"
-              />
-              <button type="submit" disabled={busy || !input.trim()} className="rounded-xl bg-brand-600 text-white px-3 py-2 text-sm font-semibold hover:bg-brand-700 disabled:opacity-50">
-                Send
-              </button>
-            </form>
-            <p className="mt-2 text-[10px] text-slate-400 text-center">AI assistant. Email support@learnzo.online for detailed help.</p>
-          </div>
+          {/* Input Area */}
+          <form 
+            onSubmit={(e) => { e.preventDefault(); handleSend(message); }} 
+            className="p-3 bg-white border-t border-slate-200 shrink-0 flex gap-2"
+          >
+            <input
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Ask a question..."
+              className="flex-1 rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:border-brand-500"
+            />
+            <button
+              type="submit"
+              disabled={busy || !message.trim()}
+              className="bg-brand-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-brand-700 disabled:opacity-50"
+            >
+              Send
+            </button>
+          </form>
         </div>
+      ) : (
+        <button
+          onClick={() => setOpen(true)}
+          className="w-14 h-14 bg-brand-600 text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+          </svg>
+        </button>
       )}
-    </>
+    </div>
   );
 }
