@@ -12,7 +12,7 @@ export function Nav() {
 
   return (
     <header className="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-slate-100">
-      <div className="container-x flex items-center justify-between" style={{ height: '180px' }}>
+      <div className="container-x flex items-center justify-between h-[76px]">
         <Link href="/" className="flex items-center shrink-0" aria-label="Learnzo home">
           <Image
             src="/learnzo-logo.png"
@@ -20,7 +20,7 @@ export function Nav() {
             width={800}
             height={400}
             priority
-            style={{ height: '160px', width: 'auto' }}
+            style={{ height: '64px', width: 'auto' }}
           />
         </Link>
 

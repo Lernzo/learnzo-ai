@@ -14,7 +14,7 @@ export function Footer() {
                 alt="Learnzo"
                 width={800}
                 height={400}
-                style={{ height: '160px', width: 'auto' }}
+                style={{ height: '72px', width: 'auto' }}
               />
             </Link>
           </div>
