@@ -1,0 +1,21 @@
+# intermediate render artefacts
+output/check_*.png
+output/frame_*.png
+output/fix_*.png
+output/base_*.png
+output/plate_*.png
+output/edge*.png
+output/strip_*.png
+output/skycrop.png
+output/blotch.png
+output/blob*.png
+output/bea.png
+output/cast2.png
+output/castsheet.png
+output/sunny_moods.png
+output/probe.png
+output/fg_only.png
+output/pip_sprite.png
+assets/mix.wav
+assets/narration_raw_*.wav
+__pycache__/
