@@ -19,3 +19,8 @@ BNUPS6281H.jpg
 *.jpg
 *.ps1
 *.bak
+
+# Leanzo Rescue Team - video production assets (illustrated scene plates)
+!rescue-team/scenes/*.jpg
+!rescue-team/poster.jpg
+!rescue-team/contact-sheet.jpg
