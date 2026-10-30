@@ -8,6 +8,8 @@ Learnzo logo.
 | `LEARNZO_RESCUE_TEAM_INTRO.mp4` | **The deliverable.** 1920×1080, 30 fps, H.264 + AAC, exactly 60.00 s, full voice cast + original music. |
 | `poster.jpg` | 1080p brand end-card still (handy as a thumbnail). |
 | `contact-sheet.jpg` | 8-frame overview of the finished video. |
+| `LEARNZO_RESCUE_TEAM_REEL_9x16.mp4` | **Vertical cut** — 1080×1920, 41.6 s, the new 2026 dialogue with five character voices, karaoke captions, brand bug, logo open + end card. |
+| `vertical/` | Vertical cut assets: 7 vertical key-art plates, voice files, mix master, `plan.json`, tools, and `PRODUCTION-PACKAGE.md` (shot list + 3D/voice/lip-sync spec + video-model prompt pack). |
 | `scenes/` | 7 illustrated key-art plates, 1376×768 (used as the camera plates). |
 | `audio/vo/` | The 10 recorded voice lines, one file per character beat. |
 | `audio/music/music_bed.wav` | 60 s original instrumental bed (synthesised, royalty-free). |

@@ -1,0 +1,140 @@
+{
+  "duration": 41.6,
+  "shots": [
+    {
+      "id": "open",
+      "plate": "v_town",
+      "speaker": null,
+      "vo": null,
+      "title": "LEARNZO RESCUE TEAM",
+      "sub": "THE OFFICIAL SERIES INTRO",
+      "dur": 3.4,
+      "start": 0.0,
+      "end": 3.4
+    },
+    {
+      "id": "captain",
+      "plate": "v_captain",
+      "speaker": "CAPTAIN RAINBOW",
+      "role": "Team Leader",
+      "colour": "#8C46C9",
+      "vo": "captain.mp3",
+      "caption": "Hello, little heroes! Welcome to Leanzo Rescue Team! Let's go on some amazing adventures!",
+      "mouth": [
+        0.47,
+        0.385
+      ],
+      "vo_dur": 5.93,
+      "vo_at": 3.95,
+      "start": 3.4,
+      "end": 10.33
+    },
+    {
+      "id": "ruby",
+      "plate": "v_ruby",
+      "speaker": "RUBY",
+      "role": "Red Fire Truck",
+      "colour": "#E8322D",
+      "vo": "ruby.mp3",
+      "caption": "Hi, friends! I'm Ruby, the RED fire truck! I love helping everyone!",
+      "mouth": [
+        0.5,
+        0.632
+      ],
+      "vo_dur": 4.47,
+      "vo_at": 10.88,
+      "start": 10.33,
+      "end": 15.8
+    },
+    {
+      "id": "blue",
+      "plate": "v_blue",
+      "speaker": "OFFICER BLUE",
+      "role": "Blue Police Car",
+      "colour": "#1473E6",
+      "vo": "blue.mp3",
+      "caption": "Hello! I'm Officer Blue, the BLUE police car! I'm always ready to help!",
+      "mouth": [
+        0.47,
+        0.607
+      ],
+      "vo_dur": 4.86,
+      "vo_at": 16.35,
+      "start": 15.8,
+      "end": 21.66
+    },
+    {
+      "id": "sunny",
+      "plate": "v_sunny",
+      "speaker": "SUNNY",
+      "role": "Yellow Ambulance",
+      "colour": "#F5A800",
+      "vo": "sunny.mp3",
+      "caption": "Hi there! I'm Sunny, the YELLOW ambulance! I love caring for my friends!",
+      "mouth": [
+        0.44,
+        0.64
+      ],
+      "vo_dur": 4.41,
+      "vo_at": 22.21,
+      "start": 21.66,
+      "end": 27.07
+    },
+    {
+      "id": "greenie",
+      "plate": "v_greenie",
+      "speaker": "GREENIE",
+      "role": "Green Rescue Jeep",
+      "colour": "#3FA535",
+      "vo": "greenie.mp3",
+      "caption": "Hey, everyone! I'm Greenie, the GREEN rescue jeep! Let's explore together!",
+      "mouth": [
+        0.55,
+        0.645
+      ],
+      "vo_dur": 4.73,
+      "vo_at": 27.62,
+      "start": 27.07,
+      "end": 32.8
+    },
+    {
+      "id": "together",
+      "plate": "v_group",
+      "speaker": "ALL TOGETHER",
+      "role": "Leanzo Rescue Team",
+      "colour": "#16B8B0",
+      "vo": "chorus_a.mp3",
+      "chorus": [
+        "chorus_b.mp3",
+        "chorus_c.mp3"
+      ],
+      "caption": "Let's learn, laugh and rescue together!",
+      "mouth": [
+        0.47,
+        0.372
+      ],
+      "vo_dur": 2.85,
+      "vo_at": 33.35,
+      "chorus_dur": [
+        2.77,
+        3.16
+      ],
+      "start": 32.8,
+      "end": 37.0
+    },
+    {
+      "id": "end",
+      "plate": "v_group",
+      "speaker": null,
+      "vo": null,
+      "title": "LEARNZO",
+      "sub": "Learn. Understand. Grow.",
+      "endcard": true,
+      "dur": 4.6,
+      "start": 37.0,
+      "end": 41.6
+    }
+  ],
+  "fade_out": 1.1,
+  "xfade": 0.42
+}
