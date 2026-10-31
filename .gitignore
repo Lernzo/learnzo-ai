@@ -19,3 +19,9 @@ BNUPS6281H.jpg
 *.jpg
 *.ps1
 *.bak
+
+# video working files
+video/build/
+video/assets/*.wav
+video/pylibs/
+video/__pycache__/
