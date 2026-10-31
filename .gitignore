@@ -26,3 +26,6 @@ nursery-rhyme-video/output/
 nursery-rhyme-video/media/scenes/
 nursery-rhyme-video/media/audio/
 nursery-rhyme-video/build.log
+
+# Scene clips
+nursery-rhyme-video/output/Scene-*.mp4
