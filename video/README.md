@@ -8,7 +8,7 @@ re-rendered or re-timed without touching the art.
 
 | File | What it is |
 | --- | --- |
-| `The-Magical-Rainbow-Bus.mp4` | Final 1920×1080 / 30 fps video with the full soundtrack (voice, music bed, SFX, captions). |
+| `The-Magical-Rainbow-Bus.mp4` | Final 1920×1080 / 30 fps video (3:06, 43 MB) with the soundtrack: voice, original music, SFX and captions. |
 | `magical-rainbow-bus-poster.png` | Key-art poster still. |
 | `assets/learnzo-logo.png` | The supplied Learnzo logo, used unmodified (see below). |
 
@@ -57,6 +57,18 @@ detail never drift between shots:
 | 13 | Quiz 2 | 2:33 | 2:44 | "Which colour is the sunshine?" → pause → sun glows → "The sunshine is YELLOW!" |
 | 14 | Finale | 2:44 | 2:56 | Full rainbow ride, confetti, seven icons, gang + Maggie. |
 | 15 | End card | 2:56 | 3:06 | Logo, "See you soon, little friends!", cast waves, gentle fade. |
+
+## Voice track status
+
+Scene 1 is fully voiced (Maggie, Bunny, Buddy, Leo, Ellie, Miko), plus song 1,
+Maggie's rainbow reveal and the first quiz question. The remaining scripted lines
+— the seven colour calls, song verse 2, the friends verse, the second quiz
+question and the closer — are currently carried by the on-screen lyrics/captions
+and the music bed, because the text-to-speech quota for this session was reached
+mid-build. `plan.py` already lists all of them in `OPTIONAL`; dropping the audio
+files into `audio/` and re-running `make_audio.py` + the mux step inserts them
+automatically, with the music auto-ducking around them — no picture re-render
+needed.
 
 ## Sound
 
