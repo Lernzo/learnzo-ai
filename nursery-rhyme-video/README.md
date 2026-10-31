@@ -53,3 +53,12 @@ python3 nursery-rhyme-video/src/assemble_video.py
 Note: this package renders a cinematic **animatic** (motion over scene art). For a fully
 animated 3D render, feed `STORYBOARD.md` + `media/scenes/` to a 3D/animation pipeline;
 the timing map, music bed, vocal track and logo composite carry over unchanged.
+
+## Fully-animated 3D scene (Blender/bpy)
+- `src/build_3d_scene.py` — builds the real 3D scene (Benny + riders, road, scrolling
+  background, butterflies, clouds) and renders 192 frames with Cycles CPU
+  (`pip install bpy`; on headless Linux stub the X/GL libs or set LD_LIBRARY_PATH).
+  All characters are animated: spinning wheels, bouncing suspension, blinking eyes,
+  waving arms, wiggling bunny ears, swaying trees/flowers, drifting clouds.
+- `src/encode_3d.py` — frames → 1920×1080 H.264 + logo bottom-right + English song audio.
+- Output: `output/Wheels-on-the-Bus-3D-animated-8s.mp4` (+ `downloads/` copy).
