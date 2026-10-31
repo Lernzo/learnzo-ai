@@ -19,3 +19,10 @@ BNUPS6281H.jpg
 *.jpg
 *.ps1
 *.bak
+
+# Nursery-rhyme video build artifacts (binaries)
+nursery-rhyme-video/media/work/
+nursery-rhyme-video/output/
+nursery-rhyme-video/media/scenes/
+nursery-rhyme-video/media/audio/
+nursery-rhyme-video/build.log
